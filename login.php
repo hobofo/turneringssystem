@@ -48,7 +48,7 @@ include_once("inc_header.php");
 
                                             </label>
 
-                                        <div><input type="text" required  id="password" name="password"></div>
+                                        <div><input type="password" required  id="password" name="password"></div>
 					<? if(9==8) {?>
                                         <div><input type="checkbox"  id="remember" name="remember">
 
