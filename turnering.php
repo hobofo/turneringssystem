@@ -372,7 +372,7 @@ function puljer_start(){
                                                 
                                                 <section>
                                                         <label for="nummer_spiller1">Spiller 1</label>
-							<div><input type="text" id="nummer_spiller1" name="nummer_spiller1" placeholder="Indtast telefonnummer på spiller 1" required >
+							<div><input type="text" tabindex="1" id="nummer_spiller1" name="nummer_spiller1" placeholder="Indtast telefonnummer på spiller 1" required >
                                                          
                                                          <div style="height:10px;"></div>
                                                              <input type="checkbox" id="betalt_spiller1" checked="checked" value ="1" name="betalt_spiller1" ><label for="betalt_spiller1" >Betalt</label>
@@ -380,13 +380,13 @@ function puljer_start(){
 						</section>
                                                 <section>
                                                         <label for="nummer_spiller2">Spiller 2</label>
-							<div><input type="text" id="nummer_spiller2" name="nummer_spiller2" placeholder="Indtast telefonnummer på spiller 2">
+							<div><input type="text" tabindex="2" id="nummer_spiller2" name="nummer_spiller2" placeholder="Indtast telefonnummer på spiller 2">
 							<div style="height:10px;"></div>
                                                              <input type="checkbox" id="betalt_spiller2" checked="checked" value ="1" name="betalt_spiller2" ><label for="betalt_spiller2" >Betalt</label>
                                                          </div>
 						</section>
                                                 <section>
-							<div><button class="submit" id="gemspiller">Gem</button></div>
+							<div><button tabindex="3" class="submit" id="gemspiller">Gem</button></div>
 						</section>
 
                                         </fieldset>
