@@ -375,14 +375,14 @@ function puljer_start(){
 							<div><input type="text" id="nummer_spiller1" name="nummer_spiller1" placeholder="Indtast telefonnummer på spiller 1" required >
                                                          
                                                          <div style="height:10px;"></div>
-                                                             <input type="checkbox" id="betalt_spiller1" value ="1" name="betalt_spiller1" ><label for="betalt_spiller1" >Betalt</label>
+                                                             <input type="checkbox" id="betalt_spiller1" checked="checked" value ="1" name="betalt_spiller1" ><label for="betalt_spiller1" >Betalt</label>
                                                          </div>
 						</section>
                                                 <section>
                                                         <label for="nummer_spiller2">Spiller 2</label>
 							<div><input type="text" id="nummer_spiller2" name="nummer_spiller2" placeholder="Indtast telefonnummer på spiller 2">
 							<div style="height:10px;"></div>
-                                                             <input type="checkbox" id="betalt_spiller2" value ="1" name="betalt_spiller2" ><label for="betalt_spiller2" >Betalt</label>
+                                                             <input type="checkbox" id="betalt_spiller2" checked="checked" value ="1" name="betalt_spiller2" ><label for="betalt_spiller2" >Betalt</label>
                                                          </div>
 						</section>
                                                 <section>
