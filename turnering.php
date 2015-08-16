@@ -116,8 +116,8 @@ if(mysql_num_rows($result) > 0){
 
       // gemmer borde
       var bordialt = "";
-      $('.valgtbord:selected').each(function(index) {
-        bordialt = bordialt +'-'+ index;
+      $('.valgtbord:selected').each(function(index, value) {
+        bordialt = bordialt +'-'+ value.value;
       });
       
       $.get('ajax/borde_opdater.php?id='+turneringsid+'&bord='+bordialt+'', function(data) {});
