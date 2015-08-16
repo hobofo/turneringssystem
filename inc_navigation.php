@@ -42,7 +42,7 @@
 <ul id="nav">
 
         <li class="i_blocks_images"><a href="startnyturnering.php"><span>Start ny turnering</span></a></li>
-        <li class="i_cog"><a href="turnering.php"><span>Turnerings indstillinger</span></a></li>
+        <li class="i_cog"><a href="turnering.php"><span>Turneringsindstillinger</span></a></li>
         
         <?php
                                         $turnering = hentturnering();

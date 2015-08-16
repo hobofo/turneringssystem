@@ -346,7 +346,7 @@ function puljer_start(){
 <section id="content">
  
                      
-		<h1>Turnerings indstillinger</h1>
+		<h1>Turneringsindstillinger</h1>
 		<p></p>
                 <div style="width:490px;">
 				<ul class="breadcrumb" data-connect="breadcrumbcontent">
