@@ -86,14 +86,14 @@ if(mysql_num_rows($result) > 0){
       var startturnering = true;
 
       // Gemmer point
-      var or_vinder = $('#or_vinder').val();
-      var or_finale = $('#or_finale').val();
-      var or_semi = $('#or_semi').val();
-      var or_kvart = $('#or_kvart').val();
-      var jay_vinder = $('#jay_vinder').val();
-      var jay_finale = $('#jay_finale').val();
-      var jay_semi = $('#jay_semi').val();
-      var jay_kvart = $('#jay_kvart').val();
+      var or_vinder = $.trim($('#or_vinder').val()) != "" ? $('#or_vinder').val() : "0";
+      var or_finale = $.trim($('#or_finale').val()) != "" ? $('#or_finale').val() : "0";
+      var or_semi = $.trim($('#or_semi').val()) != "" ? $('#or_semi').val() : "0";
+      var or_kvart = $.trim($('#or_kvart').val()) != "" ? $('#or_kvart').val() : "0";
+      var jay_vinder = $.trim($('#jay_vinder').val()) != "" ? $('#jay_vinder').val() : "0";
+      var jay_finale = $.trim($('#jay_finale').val()) != "" ? $('#jay_finale').val() : "0";
+      var jay_semi = $.trim($('#jay_semi').val()) != "" ? $('#jay_semi').val() : "0";
+      var jay_kvart = $.trim($('#jay_kvart').val()) != "" ? $('#jay_kvart').val() : "0";
       $.get('ajax/point_opdater.php?id='+turneringsid+'&p1='+or_vinder+'&p2='+or_finale+'&p3='+or_semi+'&p4='+or_kvart+'&p5='+jay_vinder+'&p6='+jay_finale+'&p7='+jay_semi+'&p8='+jay_kvart+'', function(data) {});
 
       // Check borde
