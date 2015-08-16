@@ -298,45 +298,6 @@ function genberegnPuljer($turnering,$whitelist = ""){
             $q++;
             $opdaternr = mysql_query("UPDATE hbf_kampe SET kampnr  = '$q' WHERE kamp_id = '".$row["kamp_id"]."'") or die(mysql_error());
         }
-  
-    /*
-    foreach($puljerar as $pulje){
-        $i = 0;
-
-        $updateparam = mysql_query("SELECT * FROM hbf_kampe where turnerings_id = '$turneringsid' and pulje = '$pulje' ORDER BY (rang1 + rang2)")or die(mysql_error());
-        while($row = mysql_fetch_array($updateparam)){
-            $i++;
-            die(print_r($row));
-            mysql_query("UPDATE hbf_kampe SET parameter = '$i' WHERE kamp_id = '".$row["kamp_id"]."'")or die(mysql_error());
-        }
-
-    }
-
-    $parametre = mysql_query("SELECT DISTINCT parameter from hbf_kampe WHERE turnerings_id = '$turneringsid' order by parameter") or die(mysql_error());
-    while($row = mysql_fetch_array($parametre)){
-        $params[] = $row["parameter"];
-    }
-
-    $testfornull = false;
-    $i = 0;
-    while($testfornull == false){
-
-        foreach($params as $param){
-
-            foreach($puljerar as $pulje){
-                $i++;
-                $sort = mysql_query("UPDATE hbf_kampe SET kampnr = '$i' where turnerings_id = '$turneringsid' and parameter = '$param' and pulje = '$pulje' and kampnr = '0' ORDER BY pulje limit 1");
-
-                $antal = mysql_query("SELECT * FROM hbf_kampe where turnerings_id = '$turneringsid' and kampnr = 0");
-                $antal = mysql_num_rows($antal);
-                if($antal == 0){
-                    $testfornull = true;
-                }
-            }
-        }
-    }
-     * 
-     */
 
  }
 
