@@ -64,22 +64,36 @@ if($spiller2 != ""){
 
 if($turneringsid != ""){
 
-        if($spiller2 != ""){
-            $bruger1 = hentbruger($spiller1);
-            $bruger2 = hentbruger($spiller2);
-            $rang = $bruger1["rangliste"] + $bruger2["rangliste"];
-            $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller1','$spiller2','1',$rang,$betaltspiller1)");
-            $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller2','$spiller1','0',$rang,$betaltspiller2)");
+  if($spiller2 != ""){
+      $bruger1 = hentbruger($spiller1);
+      $bruger2 = hentbruger($spiller2);
+      $rang = $bruger1["rangliste"] + $bruger2["rangliste"];
+      $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller1','$spiller2','1',$rang,$betaltspiller1)");
+      $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller2','$spiller1','0',$rang,$betaltspiller2)");
 
-            echo "1##$navn1 og $navn2 er tilmeldt som et hold ";
+      echo "1##$navn1 og $navn2 er tilmeldt som et hold ";
 
-        } else {
-            $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,betalt) values ('$turneringsid','$spiller1','','1',$betaltspiller1)");
+      if($bruger1["opdateret_medlemskab"] == '0' && $bruger2["opdateret_medlemskab"] == '0') {
+        echo "##Både $navn1 og $navn2 mangler at opdatere sit medlemskab!";
+      } else if($bruger1["opdateret_medlemskab"] == '0') {
+        echo "##$navn1 mangler at opdatere sit medlemskab!";
+      } else if($bruger2["opdateret_medlemskab"] == '0') {
+        echo "##$navn2 mangler at opdatere sit medlemskab!";
+      } else {
+        echo "##test";
+      }
+  } else {
+      $bruger1 = hentbruger($spiller1);
+      $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,betalt) values ('$turneringsid','$spiller1','','1',$betaltspiller1)");
 
-            echo "1##$navn1 er tilmeldt som løs \n";
-        }
+      echo "1##$navn1 er tilmeldt som løs \n";
+      
+      if($bruger1["opdateret_medlemskab"] == '0') {
+        echo "##$navn1 mangler at opdatere sit medlemskab!";
+      }
+  }
 
-
+  
 
 } else {
    echo "0##Der kan ikke oprettes spillere da turneringen ikke er startet";

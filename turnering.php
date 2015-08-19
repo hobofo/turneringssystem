@@ -29,7 +29,6 @@ if(mysql_num_rows($result) > 0){
       source: brugere,
       select: function(event, ui) {
         ui.item.value = ui.item.value.substr(-8);
-        console.log(ui.item.value);
       }
     });
 
@@ -83,6 +82,11 @@ if(mysql_num_rows($result) > 0){
       $('#spiller_nummer1').focus();
 
       $.msg(data[1]);
+
+      if(typeof(data[2]) != "undefined" && data[2] !== null) {
+        $.msg(data[2]);
+      }
+
       hentspillerdata();
 
     }
