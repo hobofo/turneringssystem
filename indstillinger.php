@@ -22,7 +22,7 @@ $setting_final_10 = getsetting("final_10");
                 <div style="display:none;">
                     <div id="nulstilmedlemskaber" >
                         <form id="formnulstilmedlemskaber" action="ajax/nulstil_medlemskaber.php"  onSuccess="function(data, textStatus, jqXHR)" method="post" autocomplete="off" ajax="true" confirmSend="true">
-                            <label>KUN FOR BESTYRELSEN! Nulstil medlemsskaber</label>
+                            <label>KUN FOR BESTYRELSEN! Nulstil medlemskaber</label>
 
                             <fieldset>
                                 <section>
@@ -82,6 +82,30 @@ $setting_final_10 = getsetting("final_10");
 </section>
 </fieldset>
 </form>
+<section>
+<h2>Medlemskaber i periode</h2>
+Fra <input type="date" style="width:80px;" id="dato" /> til i dag.  <button id="opdaterBtn" type="button">Opdater</button> 
+<section>
+    <div class="g12">
+
+
+      <table class="medlemskaber" id="medlemskaber">
+    <thead>
+     <tr>
+      <th>Navn</th><th>Telefonnummer</th><th>Dato</th>
+    </tr>
+  </thead>
+  <tbody id="tabelmedlemskaber">
+
+  </tbody>
+</table>
+</div>
+
+</section>
+</div>
+</div>
+
+
 <?php
 $antalskabeloner = array("0","1","2","3","4","5","6");
 foreach($antalskabeloner as $nummer){
@@ -117,8 +141,6 @@ foreach($antalskabeloner as $nummer){
             <input id="rangliste22" name="rangliste22" type="number" value="<?=$setting[6]?>" class="integer" title="Taber finale">
             <input id="rangliste23" name="rangliste23" type="number" value="<?=$setting[7]?>" class="integer" title="Taber semifinale">
             <input id="rangliste24" name="rangliste24" type="number" value="<?=$setting[8]?>" class="integer" title="Taber kvartfinale">
-
-
         </div>
     </section>
     <section>
@@ -141,7 +163,58 @@ foreach($antalskabeloner as $nummer){
 
 </body>
 <script type="text/javascript">
+  function twoDigits(d) {
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+  }
+
+ function henttabel(){
+
+    var datoString = "" + $("#dato").val() + " 00:00:00";
+    if(Date.parse(datoString) != NaN) {
+      $.ajax({
+        url: "ajax/hentmedlemskaber.php",
+        type: "GET",
+        data: {"dato": datoString},
+        success: function(data){
+          if (typeof oTable != 'undefined') { oTable.fnDestroy(); }
+          $('#tabelmedlemskaber').empty();
+          $('#tabelmedlemskaber').html(data);
+        },
+        complete: function(data){
+
+          oTable = $('#medlemskaber').dataTable( {
+            "iDisplayLength": 50,
+            "aLengthMenu": [[10, 50,100, -1], [10, 50,100, "Alle"]],
+            "aaSorting": [[0,'asc'] ]
+            });
+          }
+        });
+    }
+  }
+
+
+
     $(document).ready(function(){
+
+      var d = new Date();
+      d.setDate(d.getDate()-7);
+      d = new Date(d);
+      var dateString = d.getUTCFullYear() + "-" + twoDigits(1 + d.getUTCMonth()) + "-" + twoDigits(d.getUTCDate());// + " " + twoDigits(d.getUTCHours()) + ":" + twoDigits(d.getUTCMinutes()) + ":" + twoDigits(d.getUTCSeconds());
+      $("#dato").val(dateString);
+
+      $('#opdaterBtn').click(function () {
+        henttabel();
+      });
+
+      $('#dato').keyup(function (e) {
+        if(e.keyCode == 13) {
+          henttabel();
+        }
+      });
+
+      henttabel();
 
         $('.formgemindstillinger').wl_Form({
             ajax:true,

@@ -74,7 +74,7 @@ if($turneringsid != ""){
       echo "1##$navn1 og $navn2 er tilmeldt som et hold ";
 
       if($bruger1["opdateret_medlemskab"] == '0' && $bruger2["opdateret_medlemskab"] == '0') {
-        echo "##Både $navn1 og $navn2 mangler at opdatere sit medlemskab!";
+        echo "##$navn1 og $navn2 mangler at opdatere sit medlemskab!";
       } else if($bruger1["opdateret_medlemskab"] == '0') {
         echo "##$navn1 mangler at opdatere sit medlemskab!";
       } else if($bruger2["opdateret_medlemskab"] == '0') {

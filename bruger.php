@@ -143,6 +143,29 @@ $bruger = hentbruger($bruger_id);
 <div style="text-align: left;">
   <a class="btn i_arrow_right icon" href="bruger_rang.php?id=<?=$bruger["bruger_id"]?>">Se alle kampe</a>
 </div>
+
+ <h3 style="margin-bottom:20px;">medlemskabshistorik</h3>
+
+ <table>
+  <thead>
+    <tr>
+      <th style="width:250px;">Registreret</th>
+    </tr>
+  </thead>
+  <?php
+
+  $medlemskaber = mysql_query("SELECT * FROM hbf_medlemskaber WHERE bruger_id = '".$bruger["bruger_id"]."' ORDER BY registreret DESC") or die(mysql_error());
+  while($rowmedlemskab = mysql_fetch_array($medlemskaber)){
+    ?>
+    <tbody>
+      <tr>
+        <th><? echo $rowmedlemskab["registreret"];?></th>
+      </tr>
+    </tbody>
+
+    <?php } ?>
+  </table>
+
 </div>
 
 </section>
