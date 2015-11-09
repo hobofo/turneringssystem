@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `hbf_medlemskaber` (
   `id` int(11) NOT NULL,
   `bruger_id` int(11) NOT NULL,
-  `registreret` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `registreret` datetime NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
