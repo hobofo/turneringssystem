@@ -6,7 +6,7 @@ Dette er koden til turneringssystemet i Hovedstadens Bordfodboldforening. Det er
 
 1. Installer WAMP ( http://www.wampserver.com/en/ )
 2. Hent Github for Windows og clone dette repository
-3. Gå ind i mysql i phpmyadmin og kør koden fra de to sql scripts
+3. Gå ind i mysql i phpmyadmin og kør sql scriptsne
 4. Gå til filen *WAMP INSTALLATIONSMAPPE*\bin\apache\apache2.4.9\bin\php.ini
 	1. Sæt short_open_tag = on
 	2. Sæt error_reporting = E_ALL ^ E_DEPRECATED
