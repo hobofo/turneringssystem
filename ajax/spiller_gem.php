@@ -79,8 +79,6 @@ if($turneringsid != ""){
         echo "##$navn1 mangler at opdatere sit medlemskab!";
       } else if($bruger2["opdateret_medlemskab"] == '0') {
         echo "##$navn2 mangler at opdatere sit medlemskab!";
-      } else {
-        echo "##test";
       }
   } else {
       $bruger1 = hentbruger($spiller1);
