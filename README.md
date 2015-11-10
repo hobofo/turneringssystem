@@ -1,6 +1,6 @@
 # HBF's turneringsystem
 
-Dette er koden til turneringssystemet i Hovedstadens Bordfodboldforening. Det er oprindeligt udviklet omkring 2013 af Simon K's ven Peter. Eventuel grimhed af kode (:poop: :poop:) stammer derfor fra ham, og ikke de nuværende personer, der vedligeholder systemet.
+Dette er koden til turneringssystemet i Hovedstadens Bordfodboldforening. Det er oprindeligt udviklet omkring 2013 af Simon K's ven Peter. Eventuel grimhed af kode (:poop: :poop:) stammer, forhåbentligt, derfra.
 
 ## Kom godt i gang
 
