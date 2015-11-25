@@ -18,7 +18,7 @@
                 <ul id="headernav">
                         <li><ul>
                                 <li><a href="rangliste.php">Rangliste</a></li>
-                                    <? if(8==9){ ?>
+                                    <?php if(8==9){ ?>
                                     <?php
                                         $turnering = hentturnering();
                                         if($turnering){
@@ -28,9 +28,9 @@
                                         } else {
                                     ?>
                                     <li><a href="javascript:void(0);">Vis turnering</a>
-                                    <? } ?>
+                                    <?php } ?>
                                     </li>
-                                    <? } ?>
+                                    <?php } ?>
 
                         </ul></li>
                 </ul>
