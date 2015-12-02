@@ -18,10 +18,16 @@ $spiller2 = $rowspiller2["spiller"];
 $spillerid1 = $rowspiller1["spiller_id"];
 $spillerid2 = $rowspiller2["spiller_id"];
 
-$query = mysql_query("DELETE FROM hbf_spillere WHERE spiller_id = '$spillerid1' OR spiller_id = '$spillerid2'");
+// $query = mysql_query("DELETE FROM hbf_spillere WHERE spiller_id = '$spillerid1' OR spiller_id = '$spillerid2'");
 
 $bruger1 = hentbruger($spiller1);
 $bruger2 = hentbruger($spiller2);
 $rang = $bruger1["rangliste"] + $bruger2["rangliste"];
-$query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang) values ('$turneringsid','$spiller1','$spiller2','1',$rang)");
-$query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang) values ('$turneringsid','$spiller2','$spiller1','0',$rang)");
+
+mysql_query("UPDATE hbf_spillere SET medspiller=$spiller1, rang=$rang WHERE turnering_id=$turneringsid AND spiller=$spiller2");
+mysql_query("UPDATE hbf_spillere SET medspiller=$spiller2, rang=$rang, primaer=0 WHERE turnering_id=$turneringsid AND spiller=$spiller1");
+
+// $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang) values ('$turneringsid','$spiller1','$spiller2','1',$rang)") or die(mysql_error());
+// $query = mysql_query("INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang) values ('$turneringsid','$spiller2','$spiller1','0',$rang)") or die(mysql_error());
+
+// header('error:'.mysql_error());

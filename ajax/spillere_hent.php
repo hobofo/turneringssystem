@@ -57,7 +57,7 @@ while($row = mysql_fetch_array($query)){
 
 
     } else {
-       $lose .= "<a href='#data' onclick='javascript:valgloesepiller(\"".$row["spiller_id"]."\");return false;' class='btn i_house icon yellow'>".$spiller["navn"]."</a>";
+       $lose .= '<a href="#data" choose-teammate-for="' . $row['spiller_id'] . '" class="btn i_house icon yellow">' . $spiller['navn'] . '</a>';
     }
 
 }

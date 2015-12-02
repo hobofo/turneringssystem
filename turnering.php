@@ -20,7 +20,37 @@ if(mysql_num_rows($result) > 0){
 <script type="text/javascript">
 
 
- $(document).ready(function(){
+$(document).ready(function(){
+
+  /**
+   * Handler for when an element with the 'choose-teammate-for'
+   * attribute is clicked
+   */
+  $('body').delegate('[choose-teammate-for]', 'click', function (event) {
+    event.preventDefault();
+
+    var playerId = $(this).attr('choose-teammate-for');
+    var tournamentId = $('.turneringsid').val();
+
+    chooseTeammate(playerId, tournamentId);
+  });
+
+  /**
+   * Handler for when a form with the 'remove-loose-player'
+   * attribute is clicked
+   */
+  $('body').delegate('[remove-loose-player]', 'submit', function (event) {
+    event.preventDefault();
+
+    var data = {};
+
+    $(this).serializeArray().forEach(function (prop) {
+      data[prop.name] = prop.value;
+    });
+
+    removeLoosePlayer(data);
+  });
+
    hentspillerdata();
    $.get('ajax/hent_bruger_navne.php', function(data) {
     var brugere = data.split(',')
@@ -219,29 +249,53 @@ function checkvalid(){
 
    }
 
-
-   function valgloesepiller(spillerid) {
-    var turneringsid = $('.turneringsid').val();
-
-    $.get('ajax/spillere_hent.php?id='+turneringsid+'&kunloese='+spillerid+'', function(data) {
-
-      $('#data_loesspiller').html(data);
-
-      $.fancybox(
-      {
-
-        'speedIn'		:	250,
-        'speedOut'		:	0   ,
-        'overlayShow'	:	true,
-                    //'onStart': function(){alert("ttt")},
-                    'enableEscapeButton':true,
-                    'content':$("#data_loesspiller").html()
-                  }
-                  );
+  function openFancyBox(htmlContent) {
+    $.fancybox({
+      speedIn: 250,
+      speedOut: 0,
+      overlayShow: true,
+      enableEscapeButton: true,
+      content: htmlContent
     });
+  }
 
+  function chooseTeammate(playerId, tournamentId) {
+    var url = 'ajax/loose_players.php?tournamentId=' + tournamentId + '&exceptPlayer=' + playerId; 
+    var html = '';
 
+    $.get(url, function(availablePlayers) {
+      html += '<h3 style="margin-bottom: 5px;">Vælg partner</h3>';
+
+      if(availablePlayers.length > 0) {
+        availablePlayers.forEach(function(player) {
+          html += '<a href="#data" class="btn i_house icon yellow">' + player.name + '</a>';
+        });
+      } else {
+        html += '<p>Ingen tilgængelige medspillere</p>';
+      }
+
+      html += '<hr>';
+      html += '<form class="form-plain" remove-loose-player action="ajax/remove_loose_player.php" method="post">';
+      html += '<input type="hidden" name="playerId" value="' + playerId + '">';
+      html += '<input type="hidden" name="tournamentId" value="' + tournamentId + '">';
+      html += '<button class="red button-wide" type="submit">Fjern spiller</button>';
+      html += '</form>'
+
+      openFancyBox(html);
+    });
   };
+
+  function removeLoosePlayer(data) {
+    $.post('ajax/remove_loose_player.php', data)
+      .done(function () {
+        var selector = '[choose-teammate-for=' + data.playerId + ']';
+        $(selector).remove();
+        $.fancybox.close();
+        $.msg('Spiller fjernet');
+      }).fail(function(error) {
+        $.msg('Der skete en fejl. Prøv igen.');
+      });
+  }
 
 
 
