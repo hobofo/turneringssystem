@@ -1,7 +1,10 @@
 <?php
 
-$connectionString = 'mysql:host=localhost;dbname=hobofo_dk;charset=utf8';
-$username = 'homestead';
-$password = 'secret';
+$dbHost = getenv('DB_HOST');
+$dbUser = getenv('DB_USER');
+$dbPass = getenv('DB_PASS');
+$dbName = getenv('DB_NAME');
 
-return new PDO($connectionString, $username, $password);
+$connectionString = "mysql:host=$dbHost;dbname=$dbName;charset=utf8";
+
+return new PDO($connectionString, $dbUser, $dbPass);
