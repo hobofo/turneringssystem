@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `hbf_medlemskaber` (
 ALTER TABLE `hbf_medlemskaber`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `hbf_medlemskaber` CHANGE `registreret` `registreret` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;
 --
 -- AUTO_INCREMENT for dumped tables
 --
