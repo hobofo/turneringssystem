@@ -1,0 +1,122 @@
+/*wednesday: rgb(183, 210, 135); */
+/*monday: rgb(253, 241, 106); */
+/*thursday: rgb(254, 115, 117); */
+/*tuesday: rgb(16, 156, 238); */
+
+html, body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+}
+
+.menu {
+    background: #eee;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 1.375em;
+    height: 2em;
+    overflow: hidden;
+}
+
+.menu li {
+    float: left;
+    line-height: 2em;
+    text-align: center;
+    width: 50%;
+}
+
+.menu li:hover { cursor: pointer; }
+
+.menu li.active {
+    background: #ccc;
+}
+
+.rankings-container {
+    margin-top: 3em;
+    padding: 0 1.375em 1.375em;
+    width: 100%;
+}
+
+.scores-table-title {
+    display: none;
+}
+
+.scores-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.scores-table-container {
+    display: none;
+}
+
+.scores-table-container.active {
+    display: table;
+}
+
+.scores-table tr {
+    width: 100%;
+}
+
+.scores-table tr:nth-child(even) td {
+    background: #eee;
+}
+
+.scores-table td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: calc(0.6875em / 2) calc(0.6875em / 4);
+}
+
+.scores-table td.rank { width: 15%; }
+.scores-table td.name { width: 73%; }
+.scores-table td.points { width: 22%; }
+
+.overall-rankings tr td.wednesday { background: rgb(183, 210, 135); }
+.overall-rankings tr td.monday    { background: rgb(253, 241, 106); }
+.overall-rankings tr td.thursday  { background: rgb(254, 115, 117); }
+.overall-rankings tr td.tuesday   { background: rgb(16, 156, 238); }
+
+@media screen and (min-width: 769px) {
+    .menu { display: none; }
+
+    .rankings-container {
+        margin-top: 1.375em;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        overflow: hidden;
+    }
+
+    .scores-table-container {
+        display: block;
+        width: 49%;
+        float: left;
+    }
+
+    .scores-table-title {
+        border: 1px solid #000;
+        font-size: 2em;
+        font-weight: bold;
+        margin-bottom: .6875em;
+        display: block;
+        text-align: center;
+        padding: .3em;
+    }
+
+    .scores-table-container {
+        margin-left: 1%;
+    }
+
+    .scores-table-container:first-child {
+        margin-left: 0;
+        margin-right: 1%;
+    }
+}
