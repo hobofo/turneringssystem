@@ -8,12 +8,12 @@ function init() {
 function populateRankingsTable() {
     $.get('rankings.php', function(entries) {
         var html = entries.map(generateRowHtml).join('');
-        $('[scores-table=overall-rankings] table').html(html);
+        $('[scores-table=overall-rankings] .js-scores-table').html(html);
     });
 
     $.get('final-10.php', function(entries) {
         var html = entries.map(generateRowHtml).join('');
-        $('[scores-table=final-10] table').html(html);
+        $('[scores-table=final-10] .js-scores-table').html(html);
     });
 }
 
