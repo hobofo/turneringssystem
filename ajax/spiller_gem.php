@@ -2,6 +2,16 @@
 
 require_once("../functions.php");
 
+$maxPoints = [
+    "Monday" => 4000,
+    "Tuesday" => 9999999, //no max
+    "Wednesday" => 512,
+    "Thursday" => 16000,
+    "Friday" => 9999999, //no max
+    "Saturday" => 9999999, //no max
+    "Sunday" => 9999999, //no max
+];
+
 $spiller1 = $tlf1 =  $_POST["nummer_spiller1"];
 $spiller2 = $tlf2 = $_POST["nummer_spiller2"];
 
@@ -24,6 +34,9 @@ $rowsp1 = mysql_fetch_array($result);
 if(mysql_num_rows($result) < 1){
  echo "0##Spiller 1 med telefonnummeret '$spiller1' findes ikke! Opret spilleren og prøv igen.";
  return;
+} else if($rowsp1["rangliste"] >= $maxPoints[date('l')]) {
+      echo "0##Spiller 1 med telefonnummeret '$spiller1' har for mange point og kan desværre ikke spille med i aften.";
+     return;
 } else {
   $spiller1 = $rowsp1["bruger_id"];
   $navn1 = hentbruger($spiller1);
@@ -36,6 +49,9 @@ if($spiller2 != ""){
 
     if(mysql_num_rows($result) < 1){
      echo "0##Spiller 2 med telefonnummeret '$spiller2' findes ikke! Opret spilleren og prøv igen.";
+     return;
+    } else if($rowsp2["rangliste"] >= $maxPoints[date('l')]) {
+      echo "0##Spiller 2 med telefonnummeret '$spiller2' har for mange point og kan desværre ikke spille med i aften.";
      return;
     } else {
       $spiller2 = $rowsp2["bruger_id"];
