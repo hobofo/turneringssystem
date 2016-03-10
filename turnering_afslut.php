@@ -1,9 +1,20 @@
 <?php
 require_once("functions.php");
 $turnering = hentturnering();
+
+
+
 $turnerings_id = $turnering["turnering_id"];
 $point = $turnering["point"];
 $point = dbarraytoarray($point);
+
+if($turnering["ended"] == 1) {
+    echo "Turnering allerede afsluttet.";
+    return;
+}
+else {
+    mysql_query("UPDATE ended SET ended WHERE turnerings_id = '$turnerings_id'") or die(mysql_error());
+}
 
 ///////////////////
 // Ordinær

@@ -281,27 +281,25 @@ if(!isset($opdater)){
                     'enableEscapeButton':true
             });
             $('#formgemspiller').wl_Form({
-            ajax:true,
-            confirmSend:false,
-            onSuccess: function(data, status,jqXHR){
-                                        //var turneringsid = $('.turneringsid').val();
-                                        /*data = data.split("##");
-                                        if(data[0] == "1"){
-                                            $('#nummer_spiller1').val('');
-                                            $('#nummer_spiller2').val('');
-                                        }
-                                        $('#spiller_nummer1').focus();
-
-                                        
-                                        */
-                                        $('#formgemspiller').wl_Form('reset');
-                                        
-                                        $.fancybox.close();
-                                        $.msg(data);
-                                        hentpuljer();
-                                        hentkampe();
-                                        hentkampekommende();
-                                        hentbetalinger();
+                ajax:true,
+                confirmSend:false,
+                onSuccess: function(data, status,jqXHR){
+                //var turneringsid = $('.turneringsid').val();
+                /*data = data.split("##");
+                if(data[0] == "1"){
+                    $('#nummer_spiller1').val('');
+                    $('#nummer_spiller2').val('');
+                }
+                $('#spiller_nummer1').focus();
+                */
+                $('#formgemspiller').wl_Form('reset');
+                
+                $.fancybox.close();
+                $.msg(data);
+                hentpuljer();
+                hentkampe();
+                hentkampekommende();
+                hentbetalinger();
 				}
             });
         }
