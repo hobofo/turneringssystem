@@ -8,14 +8,6 @@ $turnerings_id = $turnering["turnering_id"];
 $point = $turnering["point"];
 $point = dbarraytoarray($point);
 
-if($turnering["ended"] == 1) {
-    echo "Turnering allerede afsluttet.";
-    return;
-}
-else {
-    mysql_query("UPDATE ended SET ended WHERE turnerings_id = '$turnerings_id'") or die(mysql_error());
-}
-
 ///////////////////
 // Ordinær
 ///////////////////
@@ -111,9 +103,8 @@ if(isset($taberkvart[1])){$taberkvartfinale2_jays = $taberkvart[1];}
 if(isset($taberkvart[2])){$taberkvartfinale3_jays = $taberkvart[2];}
 if(isset($taberkvart[3])){$taberkvartfinale4_jays = $taberkvart[3];}
 
-
-if(isset($_GET["afslut"])){
-
+if(isset($_GET["afslut"]) && $turnering["ended"] != 1){
+    mysql_query("UPDATE hbf_turnering SET ended=1 WHERE turnering_id = '$turnerings_id'") or die(mysql_error());
     // Kan kun opdateres en gang
     $hent = mysql_query("SELECT * FROM hbf_rangliste WHERE turnerings_id = '$turnerings_id'");
     if(mysql_num_rows($hent)<9999999){
@@ -162,7 +153,6 @@ if(isset($_GET["afslut"])){
         $runrangliste = afslutkamprangliste ($taberkvartfinale4_jays,$rangliste,$type,$turnerings_id);
 
     }
-
    opdaterrangliste();
    header("location:turnering_afslut.php");
 }
