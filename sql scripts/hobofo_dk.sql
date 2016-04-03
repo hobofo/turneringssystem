@@ -1,4 +1,4 @@
--- phpMyAdmin SQL Dump
+﻿-- phpMyAdmin SQL Dump
 -- version 4.2.10
 -- http://www.phpmyadmin.net
 --
@@ -104,7 +104,7 @@ CREATE TABLE `hbf_rangliste` (
   `bruger_id` int(11) NOT NULL DEFAULT '0',
   `turnerings_id` int(11) NOT NULL DEFAULT '0',
   `text` varchar(200) NOT NULL DEFAULT '',
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `point` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM AUTO_INCREMENT=9732 DEFAULT CHARSET=latin1;
 
@@ -132,9 +132,9 @@ CREATE TABLE `hbf_spillere` (
 
 CREATE TABLE `hbf_turnering` (
 `turnering_id` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `start_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `slut_date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
+  `start_date` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
+  `slut_date` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `puljer` text NOT NULL,
   `point` text NOT NULL,
   `borde` text NOT NULL,
