@@ -94,6 +94,12 @@ $i = 0;
                                     $r2 = " (".$rowrang2["rangering_total"].")";
                                 }
                             }
+                            if($row["hold2"] != 0 && $row["hold1"] != 0) {
+                                sendSMS($row);    
+                            }
+
+                            
+
                             echo "
                             <table>
                                 <tr style='$baggrund'><td style='$baggrund'>$bord</td></tr></th>

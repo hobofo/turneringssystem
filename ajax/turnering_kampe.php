@@ -37,7 +37,7 @@ $i = 0;
             }
             
             // Åbner kamp hvis holdene ikke er blandt de spillende.            
-            $kampe = mysql_query("UPDATE `hbf_kampe` SET bord = '".$normledige[$i]."',startet = now() where bord = '' and  type = 'p' and vinder = '' and  turnerings_id = '".$turneringsid."' AND hold1 NOT IN ('".implode("','",$holdarray)."') AND hold2 NOT IN ('".implode("','",$holdarray)."') order by `kampnr` limit 1") or die(mysql_error());
+            $kampe = mysql_query("UPDATE `hbf_kampe` SET bord = '".$normledige[$i]."',startet = NOW() WHERE bord = '' and  type = 'p' and vinder = '' and  turnerings_id = '".$turneringsid."' AND hold1 NOT IN ('".implode("','",$holdarray)."') AND hold2 NOT IN ('".implode("','",$holdarray)."') order by `kampnr` limit 1") or die(mysql_error());
 
         }
     }
@@ -60,8 +60,14 @@ $i = 0;
         } else {
           $baggrund = "background-image:url(css/light/images/paper_02.png);font-weight:bold;";
         }
-        
 
+        sendSMS($kamp);
+        // $text = hentnavne($kamp["hold1"]," og ")."spiller%20imod%20".hentnavne($kamp["hold2"]," og ")."%20på%20".settingNumberToName('borde',$kamp["bord"]);
+        // $ch = curl_init(); 
+        // curl_setopt($ch, CURLOPT_URL, "http://87-104-227-27-static.trp-solutions.dk/sms.php?key=yAaQ7fuGf&number=61333789&text=".$text); 
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+        // curl_exec($ch); 
+        // curl_close($ch);
 
         echo "<div class='g6' style='margin-top:0;padding-top:0;'>
                <table ><tr style='$baggrund'><td style='$baggrund'>".settingNumberToName('borde',$kamp["bord"])."</td></tr>

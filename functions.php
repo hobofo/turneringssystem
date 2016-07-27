@@ -44,6 +44,34 @@ function opdaterrangliste(){
 
 }
 
+// Send sms
+function sendSMS($kamp) {
+    if($kamp["sms_sent"] == 1) return;
+
+    $hold1 = spillerinfo($kamp["hold1"]);
+    $spillere = [];
+    $spillere[] = hentbruger($hold1["spiller"]);
+    $spillere[] = hentbruger($hold1["medspiller"]);
+    $hold2 = spillerinfo($kamp["hold2"]);
+    $spillere[] = hentbruger($hold2["spiller"]);
+    $spillere[] = hentbruger($hold2["medspiller"]);
+
+    foreach($spillere as $spiller) {
+        if($spiller["modtage_sms"] == 1) {
+            $text = "Bord ".($kamp["bord"]+1).".%0A".$spillere[0]["navn"]." og ".$spillere[1]["navn"]." - ".$spillere[2]["navn"]." og ".$spillere[3]["navn"].". Kaldt op klokken ".date('H:i').".%0AHBF";
+            $text = str_replace(' ', '%20', $text);
+            $phoneNumber = $spiller["telefon"];
+            $ch = curl_init(); 
+            curl_setopt($ch, CURLOPT_URL, "http://87-104-227-27-static.trp-solutions.dk/sms.php?key=yAaQ7fuGf&number=".$phoneNumber."&text=".$text); 
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+            curl_exec($ch); 
+            curl_close($ch);
+        }
+    }
+
+    $query = mysql_query("UPDATE hbf_kampe SET sms_sent = 1 WHERE kamp_id = '".$kamp["kamp_id"]."' ") or die(mysql_error());
+}
+
  // Henter navn
 function hentnavne($spiller_id,$opdel = "<br />"){
     if($spiller_id > 0){

@@ -5,3 +5,4 @@ Run order:
 3. opdateret_medlemskab.sql
 4. hbf_medlemskaber.sql
 5. hbf_turnering_changes.sql
+6. hbf_brugere_modtage_sms.sql

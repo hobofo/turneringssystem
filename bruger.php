@@ -68,6 +68,10 @@ $bruger = hentbruger($bruger_id);
           <div>
             <input type="checkbox" id="medlemskab" name="medlemskab" <? if ($bruger["opdateret_medlemskab"]) { echo 'checked'; } ?>>
           </div>
+          <label>Modtage SMS?</label>
+          <div>
+            <input type="checkbox" id="sms" name="sms" <? if ($bruger["modtage_sms"]) { echo 'checked'; } ?>>
+          </div>
         </section>
         <section>
          <div><button class="submit" id="gemspiller">Gem</button><a style="float:right" class="btn i_access_denied icon red" id="sletbrugerlink" href="#sletbruger">Slet bruger</a></div>
