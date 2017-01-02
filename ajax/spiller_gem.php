@@ -3,9 +3,9 @@
 require_once("../functions.php");
 
 $maxPoints = [
-    "Monday" => 4000,
+    "Monday" => 9999999, // No max.. 4000 when monday was active
     "Tuesday" => 9999999, //no max
-    "Wednesday" => 512,
+    "Wednesday" => 4000, // 512 when monday was active
     "Thursday" => 16000,
     "Friday" => 9999999, //no max
     "Saturday" => 9999999, //no max
