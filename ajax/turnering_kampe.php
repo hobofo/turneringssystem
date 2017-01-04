@@ -70,7 +70,7 @@ $i = 0;
         // curl_close($ch);
 
         echo "<div class='g6' style='margin-top:0;padding-top:0;'>
-               <table ><tr style='$baggrund'><td style='$baggrund'>".settingNumberToName('borde',$kamp["bord"])."</td></tr>
+               <table ><tr style='$baggrund'><td style='$baggrund'>".settingNumberToName('borde',$kamp["bord"])." - ".substr($kamp["startet"], -8)."</td></tr>
         <tr style='background-color:#fff;'><td>".hentnavne($kamp["hold1"]," og ")."</td></tr>
         <tr style='background-color:#fff;'><td>".hentnavne($kamp["hold2"]," og ")."</td></tr>";
          //echo "<tr><td><a href='javascript:afslutkamp(".$kamp["hold1"].",".$kamp["hold2"].")' class='btn small'>Afslut kamp</a></td></tr>";
