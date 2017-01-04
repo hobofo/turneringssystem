@@ -7,6 +7,13 @@ $turnering = hentturnering();
 $turnerings_id = $turnering["turnering_id"];
 $point = $turnering["point"];
 $point = dbarraytoarray($point);
+$antalhold = sumdbarray($turnering["puljer"]);
+
+foreach ($point as &$value) {
+    $value = $value * $antalhold;
+}
+unset($value);
+
 
 ///////////////////
 // Ordinær
@@ -58,7 +65,7 @@ if(isset($taberkvart[3])){$taberkvartfinale4 = $taberkvart[3];}
 ///////////////////
 // Jays
 ///////////////////
-$antalhold = sumdbarray($turnering["puljer"]);
+
 
 // Finaler
 $hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jf'") or die(mysql_error());
