@@ -75,6 +75,13 @@ $i = 0;
                                 $bord = "-";
                             }
 
+                            if($bord == "-" && !$vinder) {
+                                $startet = "";
+                            } else {
+                                $startet = substr($row["startet"], -8);    
+                            }
+                            
+
                             if($sidstekamp["kamp_id"] == $row["kamp_id"] && !($bord == "-")){
                               $baggrund = "background-color:#a2e8a2;font-weight:bold;";
                             } else {
@@ -102,7 +109,7 @@ $i = 0;
 
                             echo "
                             <table>
-                                <tr style='$baggrund'><td style='$baggrund'>$bord</td></tr></th>
+                                <tr style='$baggrund'><td style='$baggrund'>$bord - $startet</td></tr></th>
                                 <tr style='background-color:#fff;'><td style=\"$camp1\">$navne2 ".$r1."</td></tr>
                                 <tr style='background-color:#fff;'><td style=\"$camp2\">$navne1 ".$r2."</td></tr>
                                 <tr style='background-color:#fff;'>
