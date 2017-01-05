@@ -344,12 +344,12 @@ function checkNum($num){
         while($stop != true and $i>$q){
             
             if($kampprogram[$q] > 0 && $kampprogram[$i] > 0){
-                $kampnummer++;
                 $spiller_id = $kampprogram[$q];
                 $modstander = $kampprogram[$i];
                 $insert = mysql_query("INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','$spiller_id','$modstander','$finaletype','$kampnummer','0','0')")or die(mysql_error());
                 $stop = true;
                 $kampprogram[$i] = $kampprogram[$q] = 0;
+                $kampnummer++;
             }
 
         $i = $i - 1;
