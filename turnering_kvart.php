@@ -424,7 +424,7 @@ while($row = mysql_fetch_array($hent)){
 }
 
     // Sikre at op til 8 kampprogram er sat
-$kampnummer = 0;
+$kampnummer = 1;
 // $kampprogram[] = 0;
 // $kampprogram[] = 0;
 // $kampprogram[] = 0;
