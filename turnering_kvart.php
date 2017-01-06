@@ -258,34 +258,45 @@ if($puljerantal != 2){
   $finaletype = "k";
   $kampnummer = 0;
 
-      // Hvis 5 hold skal A2 spille mod A3
+      
+  if($holdcount == 6) {
+    $spec = "A2";
+    $modarr = array("B3");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+    $kampnummer++;
+    $spec = "B2";
+    $modarr = array("A3");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+  } else {
+    // Hvis 5 hold skal A2 spille mod A3
   if($holdcount == 5){
     $spec = "A2";
     $modarr = array("A3");
     $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
-}
+  }
       // A1 mod B4,B3,B2,B1
-$spec = "A1";
-$modarr = array("B4","B3","B2","B1");
-$kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+    $spec = "A1";
+    $modarr = array("B4","B3","B2","B1");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
 
-      // A3 mod B2,B1 (hvis A3 findes)
-$spec = "A3";
-$modarr = array("B2","B1");
-$kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+    
+          // A3 mod B2,B1 (hvis A3 findes)
+    $spec = "A3";
+    $modarr = array("B2","B1");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+    if($holdcount == 7) $kampnummer++;
+          // A2 mod B3,B2,B1 (hvis A2 findes)
+    $spec = "A2";
+    $modarr = array("B3","B2","B1");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
 
-      // A2 mod B3,B2,B1 (hvis A2 findes)
-$spec = "A2";
-$modarr = array("B3","B2","B1");
-$kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
-
-      // A4 mod B1 (hvis A4 findes)
-$spec = "A4";
-$modarr = array("B1");
-$kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+          // A4 mod B1 (hvis A4 findes)
+    $spec = "A4";
+    $modarr = array("B1");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
 
 }
-
+}
 
 $i = $q = $nummer = 0;
 
@@ -481,7 +492,15 @@ if($puljerantal != 2){
 
   $finaletype = "jk";
   $kampnummer = 0;
-
+  if($holdcount == 6) {
+    $spec = "A2";
+    $modarr = array("B3");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+    $kampnummer++;
+    $spec = "B2";
+    $modarr = array("A3");
+    $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
+  } else {
       // Hvis 5 hold skal A2 spille mod A3
   if($holdcount == 5){
     $spec = "A2";
@@ -499,6 +518,7 @@ $spec = "A3";
 $modarr = array("B2","B1");
 $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$finaletype);
 
+if($holdcount == 7) $kampnummer++;
       // A2 mod B3,B2,B1 (hvis A2 findes)
 $spec = "A2";
 $modarr = array("B3","B2","B1");
@@ -511,7 +531,7 @@ $kampnummer = set2puljer($puljer2,$kampnummer,$spec,$modarr,$turnerings_id,$fina
 
 
 
-
+}
 }
 
 
