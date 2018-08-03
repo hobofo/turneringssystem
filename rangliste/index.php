@@ -26,21 +26,22 @@
                     <td class="tuesday">Pointgrænse for Tirsdag: Ingen grænse</td>
                 </tr>
                 <tr>
-                    <td class="thursday">Pointgrænse for Torsdag: < 16.000 point</td>
+                    <!-- <td class="thursday">Pointgrænse for Torsdag: < 16.000 point</td> -->
+                    <td class="thursday">Pointgrænse for Torsdag: Ingen grænse</td>
                 </tr>
-                <tr>
+<!--                 <tr>
                     <td class="monday">Pointgrænse for Mandag: < 4.000 point</td>
-                </tr>
+                </tr> -->
                 <tr>
-                    <td class="wednesday">Pointgrænse for Onsdag: < 512 point</td>
+                    <td class="wednesday">Pointgrænse for Onsdag: < 4000 point</td>
                 </tr>
             </table>
         </div>
 
-        <div class="scores-table-container" scores-table="final-10">
+<!--         <div class="scores-table-container" scores-table="final-10">
             <h2 class="scores-table-title">Final 10</h2>
             <table class="scores-table js-scores-table final-10"></table>
-        </div>
+        </div> -->
     </div>
 
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
