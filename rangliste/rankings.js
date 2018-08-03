@@ -32,9 +32,9 @@ function generateRowHtml(row, position) {
 }
 
 function getDayByPoints(points) {
-    if (points >= 16000) { return 'tuesday'; }
+    // if (points >= 16000) { return 'tuesday'; }
     if (points >= 4000) { return 'thursday'; }
-    if (points >= 512) { return 'monday'; }
+    // if (points >= 512) { return 'monday'; }
     return 'wednesday';
 }
 
