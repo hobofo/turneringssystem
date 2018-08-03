@@ -101,24 +101,24 @@ html, body {
 .scores-table td.points { width: 22%; }
 
 .overall-rankings tr td.wednesday,
-.points-explanation tr td.wednesday { 
-    background: rgb(183, 210, 135); 
+.points-explanation tr td.wednesday {
+    background: rgb(183, 210, 135);
 }
 
-.overall-rankings tr td.monday   ,
-.points-explanation tr td.monday { 
-    background: rgb(253, 241, 106); 
-}
+/* .overall-rankings tr td.monday   ,
+.points-explanation tr td.monday {
+    background: rgb(253, 241, 106);
+} */
 
 .overall-rankings tr td.thursday ,
-.points-explanation tr td.thursday { 
-    background: rgb(254, 115, 117); 
+.points-explanation tr td.thursday {
+    background: rgb(254, 115, 117);
 }
 
-.overall-rankings tr td.tuesday  ,
-.points-explanation tr td.tuesday { 
-    background: rgb(16, 156, 238); 
-}
+/* .overall-rankings tr td.tuesday  ,
+.points-explanation tr td.tuesday {
+    background: rgb(16, 156, 238);
+} */
 
 
 @media screen and (min-width: 769px) {
