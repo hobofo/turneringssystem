@@ -4,7 +4,7 @@ require_once("functions.php");
 
 if(isset($_GET["new"])){
   $query = mysqli_query($link,"INSERT INTO hbf_turnering (date) values (now())");
-  $id = mysql_insert_id();
+  $id = mysqli_insert_id($link);
   header("location: turnering.php");
 }
 // Henter seneste turnerings id

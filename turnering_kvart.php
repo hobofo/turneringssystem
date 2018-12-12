@@ -51,11 +51,11 @@ $stop = false;
 
     // Skriver semifinaler og finale
 $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','s','5','0','0')")or die(mysqli_error($link));
-$kamp_semi_1 = mysql_insert_id();
+$kamp_semi_1 = mysqli_insert_id($link);
 $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','s','6','0','0')")or die(mysqli_error($link));
-$kamp_semi_2 = mysql_insert_id();
+$kamp_semi_2 = mysqli_insert_id($link);
 $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','f','7','0','0')")or die(mysqli_error($link));
-$kamp_finale = mysql_insert_id();
+$kamp_finale = mysqli_insert_id($link);
 
     // Hvis mindre end 8 hold - fordel hold
 $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($link));
@@ -311,11 +311,11 @@ $stop = false;
 
     // Skriver semifinaler og finale
 $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','js','5','0','0')")or die(mysqli_error($link));
-$kamp_semi_1 = mysql_insert_id();
+$kamp_semi_1 = mysqli_insert_id($link);
 $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','js','6','0','0')")or die(mysqli_error($link));
-$kamp_semi_2 = mysql_insert_id();
+$kamp_semi_2 = mysqli_insert_id($link);
 $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','jf','7','0','0')")or die(mysqli_error($link));
-$kamp_finale = mysql_insert_id();
+$kamp_finale = mysqli_insert_id($link);
 
     // Hvis mindre end 8 hold - fordel hold
 $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($link));

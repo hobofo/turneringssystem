@@ -85,7 +85,7 @@ if($turneringsid != ""){
             $bruger2 = hentbruger($spiller2);
             $rang = $bruger1["rangliste"] + $bruger2["rangliste"];
             $query = mysqli_query($link,"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller1','$spiller2','1',$rang,$betaltspiller1)");
-            $spiller_id = mysql_insert_id();
+            $spiller_id = mysqli_insert_id($link);
             $query = mysqli_query($link,"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller2','$spiller1','0',$rang,$betaltspiller2)");
 
             
