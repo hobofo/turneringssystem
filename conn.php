@@ -1,6 +1,5 @@
 <?php
 
 $default_url = "http://localhost/";
-$link = mysql_connect('localhost', 'root', '')OR die(mysql_error());
-mysql_set_charset('utf8',$link);
-$db_selected = mysql_select_db('hobofo_dk', $link); 
+$link = mysqli_connect('localhost', 'root', '', 'hobofo_dk')OR die(mysqli_error($link));
+mysqli_set_charset($link, 'utf8');

@@ -5,8 +5,8 @@ $turneringsid = $_GET["id"];
 $antalpuljer = $_GET["antal"];
 $i = 0;
 
-$query = mysql_query("SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysql_error());
-$antal = mysql_num_rows($query);
+$query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($link));
+$antal = mysqli_num_rows($query);
 
 $antalmulige = floor($antal/2);
 $overskud = $antal-floor($antal/3)*3;

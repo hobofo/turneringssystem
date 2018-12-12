@@ -17,8 +17,8 @@ $case = "
 
 // Sætter bordnumre
 // Checker at der er lige så mange nuværendekampe som borde
-    $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type <> 'p' order by $case") or die(mysql_error());
-    $livekampe = mysql_num_rows($kampe);
+    $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type <> 'p' order by $case") or die(mysqli_error($link));
+    $livekampe = mysqli_num_rows($kampe);
     $borde = dbarraytoarray($turnering["borde"]);
     $antalborde = count($borde);
 
@@ -29,8 +29,8 @@ $case = "
         // Hvem spiller nu og på hvilket bord?
         $nuborde = array();
         $holdarray = array();
-        $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type <> 'p' and hold1 > 0 and hold2 > 0 order by $case") or die(mysql_error());
-        while($kamp = mysql_fetch_array($kampe)){
+        $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type <> 'p' and hold1 > 0 and hold2 > 0 order by $case") or die(mysqli_error($link));
+        while($kamp = mysqli_fetch_array($kampe)){
             $nuborde[] = $kamp["bord"];
         }
         
@@ -42,7 +42,7 @@ $case = "
         for($i = 0;$i < $antal;$i++){
             
             // Åbner kamp hvis holdene ikke er blandt de spillende.
-            $kampe = mysql_query("UPDATE `hbf_kampe` SET bord = '".$normledige[$i]."',startet = now() where bord = '' and  type <> 'p' and vinder = '' and  turnerings_id = '".$turneringsid."' and hold1 > 0 and hold2 > 0 order by $case limit 1") or die(mysql_error());
+            $kampe = mysqli_query($link,"UPDATE `hbf_kampe` SET bord = '".$normledige[$i]."',startet = now() where bord = '' and  type <> 'p' and vinder = '' and  turnerings_id = '".$turneringsid."' and hold1 > 0 and hold2 > 0 order by $case limit 1") or die(mysqli_error($link));
 
         }
     }
@@ -50,8 +50,8 @@ $case = "
 $i = 0;
 
                 // Sidste kamp
-                $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turnerings_id."'  and type <> 'p' and hold1 > 0 and hold2 > 0 order by startet DESC, bord desc") or die(mysql_error());
-                $sidstekamp = mysql_fetch_array($kampe);
+                $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turnerings_id."'  and type <> 'p' and hold1 > 0 and hold2 > 0 order by startet DESC, bord desc") or die(mysqli_error($link));
+                $sidstekamp = mysqli_fetch_array($kampe);
                 
                 $camp = "background-image:url('css/images/icons/light/cup.png'); background-repeat:no-repeat;";
 
@@ -60,8 +60,8 @@ $i = 0;
                 foreach($typer as $index=>$type){
                     echo "<div class='g4'><h4 style='margin-bottom:5px;'>".$tekster[$index]."</h4>";
 
-                        $results = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = '$type' order by kampnr") or die(mysql_error());
-                        while($row = mysql_fetch_array($results)){
+                        $results = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = '$type' order by kampnr") or die(mysqli_error($link));
+                        while($row = mysqli_fetch_array($results)){
                             if($row["hold2"] != 0){$navne1 = hentnavne($row["hold2"]," - ");} else {$navne1 = "-";}
                             if($row["hold1"] != 0){$navne2 = hentnavne($row["hold1"]," - ");} else {$navne2 = "-";}
                             $camp1 = $camp2 = "";
@@ -90,10 +90,10 @@ $i = 0;
                             // rangering
                             $r1 = $r2 = "";
                             if(isset($_GET["rang"])){
-                                $rang_qr1 = mysql_query("Select * from hbf_puljer where turnerings_id = '".$turnerings_id."' and spiller_id = '".$row["hold1"]."'") or die(mysql_error());
-                                $rowrang1 = mysql_fetch_array($rang_qr1);
-                                $rang_qr2 = mysql_query("Select * from hbf_puljer where turnerings_id = '".$turnerings_id."' and spiller_id = '".$row["hold2"]."'") or die(mysql_error());
-                                $rowrang2 = mysql_fetch_array($rang_qr2);
+                                $rang_qr1 = mysqli_query($link,"Select * from hbf_puljer where turnerings_id = '".$turnerings_id."' and spiller_id = '".$row["hold1"]."'") or die(mysqli_error($link));
+                                $rowrang1 = mysqli_fetch_array($rang_qr1);
+                                $rang_qr2 = mysqli_query($link,"Select * from hbf_puljer where turnerings_id = '".$turnerings_id."' and spiller_id = '".$row["hold2"]."'") or die(mysqli_error($link));
+                                $rowrang2 = mysqli_fetch_array($rang_qr2);
                                 if($rowrang1["rangering_total"] > 0){
                                     $r1 = " (".$rowrang1["rangering_total"].")";
                                 }

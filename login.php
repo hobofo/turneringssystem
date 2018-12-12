@@ -5,13 +5,13 @@ session_start();
 unset($_SESSION['username']);
 if(isset($_POST["password"])){
 
-    $username = mysql_real_escape_string($_POST['username']);
+    $username = mysqli_real_escape_string($link, $_POST['username']);
     $password = ($_POST['password']);
-    $result1 = mysql_query("SELECT * FROM hbf_indstillinger WHERE short = 'password' AND setting ='$password'");
-    $result2 = mysql_query("SELECT * FROM hbf_indstillinger WHERE short = 'brugernavn' AND setting ='$username'");
-	$result3 = mysql_query("SELECT * FROM *");
+    $result1 = mysqli_query($link,"SELECT * FROM hbf_indstillinger WHERE short = 'password' AND setting ='$password'");
+    $result2 = mysqli_query($link,"SELECT * FROM hbf_indstillinger WHERE short = 'brugernavn' AND setting ='$username'");
+	$result3 = mysqli_query($link,"SELECT * FROM *");
     
-	if(mysql_num_rows($result1) && mysql_num_rows($result2) )
+	if(mysqli_num_rows($result1) && mysqli_num_rows($result2) )
 	{
 		// Login
 

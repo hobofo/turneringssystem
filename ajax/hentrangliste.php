@@ -14,8 +14,8 @@ require_once("../functions.php");
     }
     
      $i = 0;
-    $result = mysql_query($sql) or die(mysql_error());
-    while($row = mysql_fetch_array($result)){
+    $result = mysqli_query($link,$sql) or die(mysqli_error($link));
+    while($row = mysqli_fetch_array($result)){
         $i++;
         echo "
         <tr>

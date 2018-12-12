@@ -6,12 +6,12 @@ $rangliste = $_POST["rangliste"];
 //$navn = $_POST["navn"];
 
 $bruger = hentbruger($bruger_id);
-$query = mysql_query("INSERT INTO hbf_rangliste (bruger_id,text,date,point) values ('".$bruger_id."','Manuel opdatering',now(),'".$rangliste."')") or die(mysql_error());
+$query = mysqli_query($link,"INSERT INTO hbf_rangliste (bruger_id,text,date,point) values ('".$bruger_id."','Manuel opdatering',now(),'".$rangliste."')") or die(mysqli_error($link));
 
 opdaterrangliste();
 
-$ranglistesql = mysql_query("SELECT rangliste FROM  hbf_brugere WHERE  bruger_id = '$bruger_id'") or die(mysql_error());
-$row = mysql_fetch_array($ranglistesql);
+$ranglistesql = mysqli_query($link,"SELECT rangliste FROM  hbf_brugere WHERE  bruger_id = '$bruger_id'") or die(mysqli_error($link));
+$row = mysqli_fetch_array($ranglistesql);
 
 $nyrangliste = $row["rangliste"];
 
