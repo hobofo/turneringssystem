@@ -16,7 +16,7 @@ if(isset($_GET["forfra"])){
 }
 
 // Sender videre til kvartfinaler hvis der er nogen aktive kvartfinaler
-$finaler = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE type = 'f' AND turnerings_id = '$turnerings_id'") or die(mysql_error());
+$finaler = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE type = 'f' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
 if(mysql_num_rows($finaler)>0 && $startforfra == false){
     header("location:turnering_kvart.php");
     exit();
@@ -24,7 +24,7 @@ if(mysql_num_rows($finaler)>0 && $startforfra == false){
 
 foreach($puljerArray as $puljenr => $puljeinfo){
  $i = 0;
- $results = mysqli_query($link,"SELECT * FROM hbf_puljer where turnerings_id = '$turnerings_id' and pulje_nr = '$puljenr'  order by point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC") or die(mysql_error());
+ $results = mysqli_query($link,"SELECT * FROM hbf_puljer where turnerings_id = '$turnerings_id' and pulje_nr = '$puljenr'  order by point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC") or die(mysqli_error($link));
  while($pulje = mysql_fetch_array($results)){
      $i++;
     $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering = '$i' WHERE pulje_id = ".$pulje["pulje_id"]." AND turnerings_id = '$turnerings_id'");
@@ -54,10 +54,10 @@ WHERE (
     AND TYPE =  'p'
 ) >1
 ";
-$result = mysqli_query($link,"$sql") or die(mysql_error());
+$result = mysqli_query($link,"$sql") or die(mysqli_error($link));
 
 while($spiller = mysql_fetch_array($result)){
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering_konflikt = '".$spiller["konfliknr"]."' where pulje_id in (".$spiller["pulje_id"].") AND turnerings_id = '$turnerings_id'") or die(mysql_error());
+    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering_konflikt = '".$spiller["konfliknr"]."' where pulje_id in (".$spiller["pulje_id"].") AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
 
 }
 
@@ -106,7 +106,7 @@ if($konflikter < 2){
             echo "<select name='pulje_".$konflikt["konflikt"]."' class='multiple' id='multiple' multiple>";
 
 
-            $result = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id =  '$turnerings_id' AND rangering_konflikt = ".$konflikt["konflikt"]."") or die(mysql_error());
+            $result = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id =  '$turnerings_id' AND rangering_konflikt = ".$konflikt["konflikt"]."") or die(mysqli_error($link));
             while($spiller = mysql_fetch_array($result)){
                 $spiller_id = $spiller["spiller_id"];
                 echo "  <option value='$spiller_id'>".hentnavne($spiller_id,"-")."</option>";

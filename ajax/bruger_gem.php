@@ -16,7 +16,7 @@ if ($_POST["medlemskab"] == 'false') {
 	$medlem = 1;
 }
 if($telefon != ""){
-    $query = mysqli_query($link,"UPDATE hbf_brugere SET telefon = '".$telefon."', navn = '".$navn."', opdateret_medlemskab = '".$medlem."', modtage_sms = '".$sms."' WHERE bruger_id = '".$bruger_id."'") or die(mysql_error());
+    $query = mysqli_query($link,"UPDATE hbf_brugere SET telefon = '".$telefon."', navn = '".$navn."', opdateret_medlemskab = '".$medlem."', modtage_sms = '".$sms."' WHERE bruger_id = '".$bruger_id."'") or die(mysqli_error($link));
     if($medlem == '1' && $query)
     	$query = mysqli_query($link,"INSERT INTO hbf_medlemskaber (bruger_id) VALUES ('".$bruger_id."')");
     echo "Brugeren er opdateret";

@@ -14,7 +14,7 @@ require_once("../functions.php");
     }
     
      $i = 0;
-    $result = mysqli_query($link,$sql) or die(mysql_error());
+    $result = mysqli_query($link,$sql) or die(mysqli_error($link));
     while($row = mysql_fetch_array($result)){
         $i++;
         echo "

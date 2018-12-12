@@ -8,7 +8,7 @@ if(isset($_GET["new"])){
   header("location: turnering.php");
 }
 // Henter seneste turnerings id
-$result = mysqli_query($link,"SELECT turnering_id from hbf_turnering order by date desc limit 0,1") or die(mysql_error());
+$result = mysqli_query($link,"SELECT turnering_id from hbf_turnering order by date desc limit 0,1") or die(mysqli_error($link));
 $row = mysql_fetch_array($result);
 if(mysql_num_rows($result) > 0){
   $turneringsid = $row["turnering_id"];

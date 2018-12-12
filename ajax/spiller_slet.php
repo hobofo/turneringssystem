@@ -12,7 +12,7 @@ $medspiller =  $spillerinfo["medspiller"];
 
 $sql = "DELETE FROM hbf_spillere WHERE spiller in ('$spiller','$medspiller') and medspiller in ('$spiller','$medspiller') ";
 
-mysqli_query($link,$sql) or die(mysql_error());
+mysqli_query($link,$sql) or die(mysqli_error($link));
 
 
 echo "Holdet er fjernet";

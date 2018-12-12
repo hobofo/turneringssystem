@@ -13,7 +13,7 @@ $betaltspiller2 = $_POST["betalt_spiller2"];
 
 $turnering = hentturnering();
 $turneringsid = $turnering["turnering_id"];
-$update = mysqli_query($link,"UPDATE hbf_kampe SET kampnr = '0' WHERE turnerings_id = '$turneringsid' AND vinder = '' AND type = 'p'")or die(mysql_error());
+$update = mysqli_query($link,"UPDATE hbf_kampe SET kampnr = '0' WHERE turnerings_id = '$turneringsid' AND vinder = '' AND type = 'p'")or die(mysqli_error($link));
            
 // tester at spillerne ikke er ens
 if($spiller1 ==$spiller2){
@@ -90,7 +90,7 @@ if($turneringsid != ""){
 
             
             // Indsætter pulje
-            $results = mysqli_query($link,"INSERT INTO hbf_puljer (turnerings_id,pulje_nr,spiller_id,point,kampe,type) values ('$turneringsid','$pulje_nr','$spiller_id','0','0','p')") or die(mysql_error());
+            $results = mysqli_query($link,"INSERT INTO hbf_puljer (turnerings_id,pulje_nr,spiller_id,point,kampe,type) values ('$turneringsid','$pulje_nr','$spiller_id','0','0','p')") or die(mysqli_error($link));
 
             // Finder mindste pulje
             $puljertilny = dbarraytoarray($turnering["puljer"]);
@@ -98,22 +98,22 @@ if($turneringsid != ""){
 
             $puljertilny[0]  = $puljertilny[0]+1;
             $puljerny = arraytodbarray($puljertilny);
-            $opdater = mysqli_query($link,"UPDATE hbf_turnering SET puljer = '$puljerny' where turnering_id = '$turneringsid'") or die(mysql_error());
+            $opdater = mysqli_query($link,"UPDATE hbf_turnering SET puljer = '$puljerny' where turnering_id = '$turneringsid'") or die(mysqli_error($link));
 
             // Indsætter kampe
-            $result_partner = mysqli_query($link,"SELECT * FROM `hbf_puljer` where turnerings_id = '$turneringsid' and pulje_nr = '$pulje_nr' and spiller_id <> '$spiller_id' order by pulje_id DESC") or die(mysql_error());
+            $result_partner = mysqli_query($link,"SELECT * FROM `hbf_puljer` where turnerings_id = '$turneringsid' and pulje_nr = '$pulje_nr' and spiller_id <> '$spiller_id' order by pulje_id DESC") or die(mysqli_error($link));
             while($rowp = mysql_fetch_array($result_partner)){
                 $modstander =  $rowp["spiller_id"];
                 // Ser om kombinationen findes
-                $komp = mysqli_query($link,"SELECT *  FROM `hbf_kampe` where turnerings_id = '$turneringsid'  and ((hold1 = '$spiller_id' AND hold2 = '$modstander') OR (hold1 = '$modstander' AND hold2 = '$spiller_id') )") or die(mysql_error());
+                $komp = mysqli_query($link,"SELECT *  FROM `hbf_kampe` where turnerings_id = '$turneringsid'  and ((hold1 = '$spiller_id' AND hold2 = '$modstander') OR (hold1 = '$modstander' AND hold2 = '$spiller_id') )") or die(mysqli_error($link));
                 if(mysql_num_rows($komp)< 1){
                         $rang1 = hentrang($spiller_id);
                         $rang2 = hentrang($modstander);
-                        $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,rang1,rang2,type,kampnr,pulje,parameter) values ('$turneringsid','$spiller_id','$modstander','$rang1','$rang2','p','0','$pulje_nr','0')")or die(mysql_error());
+                        $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,rang1,rang2,type,kampnr,pulje,parameter) values ('$turneringsid','$spiller_id','$modstander','$rang1','$rang2','p','0','$pulje_nr','0')")or die(mysqli_error($link));
                 }
             }
 
-            $update = mysqli_query($link,"UPDATE hbf_kampe SET kampnr = '0' WHERE turnerings_id = '$turneringsid' AND vinder = '' AND type = 'p'")or die(mysql_error());
+            $update = mysqli_query($link,"UPDATE hbf_kampe SET kampnr = '0' WHERE turnerings_id = '$turneringsid' AND vinder = '' AND type = 'p'")or die(mysqli_error($link));
             updatekampnr();
             
             echo "$navn1 og $navn2 er tilmeldt som et hold ";

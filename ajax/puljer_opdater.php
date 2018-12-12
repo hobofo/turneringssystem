@@ -5,7 +5,7 @@ $turneringsid = $_GET["id"];
 $antalpuljer = $_GET["antal"];
 $i = 0;
 
-$query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysql_error());
+$query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($link));
 $antal = mysql_num_rows($query);
 
 $antalmulige = floor($antal/2);
@@ -32,6 +32,6 @@ $antaltype2 = $overskud;
     $puljer = substr($puljer,0,-1);
 
 //$type1 $antaltype1 $type2 $antaltype2
-$opdater = mysqli_query($link,"UPDATE hbf_turnering SET puljer = '$puljer' WHERE turnering_id = '$turneringsid'") or die(mysql_error());
+$opdater = mysqli_query($link,"UPDATE hbf_turnering SET puljer = '$puljer' WHERE turnering_id = '$turneringsid'") or die(mysqli_error($link));
 
 ?>
