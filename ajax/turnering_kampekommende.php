@@ -6,7 +6,7 @@ $turnering = hentturnering();
 
 $turneringsid = $turnering["turnering_id"];
 $i = 0;
- $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord = '' and type = 'p' order by kampnr") or die(mysql_error());
+ $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord = '' and type = 'p' order by kampnr") or die(mysql_error());
  $antal = mysql_num_rows($kampe);
  // <h4 style='margin-bottom:5px;'>Kommende kampe (<?=$antal)</h4>
 ?>
@@ -37,7 +37,7 @@ $i = 0;
 
 
 <?
-$kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and vinder = '' AND type = 'p'") or die(mysql_error());
+$kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and vinder = '' AND type = 'p'") or die(mysql_error());
 if(mysql_num_rows($kampe) < 1){
 
 ?>

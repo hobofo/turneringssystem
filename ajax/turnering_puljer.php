@@ -10,7 +10,7 @@ genberegnPuljer($turnering["turnering_id"]);
 ?>
     <?
     $nummerOld = $nummer ="";
-    $puljer = mysql_query("SELECT * FROM hbf_puljer WHERE turnerings_id = '".$turnering["turnering_id"]."' order by pulje_nr, point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC,kampe DESC,initial_placering,spiller_id") or die(mysql_error());
+    $puljer = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id = '".$turnering["turnering_id"]."' order by pulje_nr, point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC,kampe DESC,initial_placering,spiller_id") or die(mysql_error());
     
     while($pulje = mysql_fetch_array($puljer)){
 

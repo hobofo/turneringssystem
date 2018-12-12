@@ -7,7 +7,7 @@ $max = floor($antalhold);
 $antalmulige = floor($antalhold/2);
 $i = 0;
 
-//$query = mysql_query("SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysql_error());
+//$query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysql_error());
 
 //$antal = mysql_num_rows($query);
 //$antalmulige = floor($antal/3);

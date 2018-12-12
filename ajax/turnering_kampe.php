@@ -9,7 +9,7 @@ $i = 0;
 
     <?php
     // Checker at der er lige så mange nuværendekampe som borde
-    $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysql_error());
+    $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysql_error());
     $livekampe = mysql_num_rows($kampe);
     $borde = dbarraytoarray($turnering["borde"]);
     $antalborde = count($borde);
@@ -20,7 +20,7 @@ $i = 0;
         // Hvem spiller nu og på hvilket bord?
         $nuborde = array();
         $holdarray = array();
-        $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysql_error());
+        $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysql_error());
         while($kamp = mysql_fetch_array($kampe)){
             $nuborde[] = $kamp["bord"];
         }
@@ -30,24 +30,24 @@ $i = 0;
         }
        
         for($i = 0;$i < $antal;$i++){
-            $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysql_error());
+            $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysql_error());
             while($kamp = mysql_fetch_array($kampe)){
                 $holdarray[]= $kamp["hold1"];
                 $holdarray[]= $kamp["hold2"];
             }
             
             // Åbner kamp hvis holdene ikke er blandt de spillende.            
-            $kampe = mysql_query("UPDATE `hbf_kampe` SET bord = '".$normledige[$i]."',startet = NOW() WHERE bord = '' and  type = 'p' and vinder = '' and  turnerings_id = '".$turneringsid."' AND hold1 NOT IN ('".implode("','",$holdarray)."') AND hold2 NOT IN ('".implode("','",$holdarray)."') order by `kampnr` limit 1") or die(mysql_error());
+            $kampe = mysqli_query($link,"UPDATE `hbf_kampe` SET bord = '".$normledige[$i]."',startet = NOW() WHERE bord = '' and  type = 'p' and vinder = '' and  turnerings_id = '".$turneringsid."' AND hold1 NOT IN ('".implode("','",$holdarray)."') AND hold2 NOT IN ('".implode("','",$holdarray)."') order by `kampnr` limit 1") or die(mysql_error());
 
         }
     }
 
     // Sidste kamp
-    $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by startet DESC, bord desc") or die(mysql_error());
+    $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by startet DESC, bord desc") or die(mysql_error());
     $sidstekamp = mysql_fetch_array($kampe);
     
     $i = 0;
-    $kampe = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by bord") or die(mysql_error());
+    $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by bord") or die(mysql_error());
     while($kamp = mysql_fetch_array($kampe)){
         $i++;
         if($i == 1){

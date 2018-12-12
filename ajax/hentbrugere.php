@@ -1,7 +1,7 @@
 <?php
 require_once("../functions.php");
     // Henter seneste turnerings id
-    $result = mysql_query("SELECT * from hbf_brugere where deaktiv != 1") or die(mysql_error());
+    $result = mysqli_query($link,"SELECT * from hbf_brugere where deaktiv != 1") or die(mysql_error());
     while($row = mysql_fetch_array($result)){
         if ($row["opdateret_medlemskab"] == '1') {
             $opdateret_medlemskab = "Tjek!";

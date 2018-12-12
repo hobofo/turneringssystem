@@ -20,7 +20,7 @@ unset($value);
 ///////////////////
 
 // Finaler
-$hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'f'") or die(mysql_error());
+$hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'f'") or die(mysql_error());
 $row = mysql_fetch_array($hent);
 
 $vinder = $row["vinder"];
@@ -32,7 +32,7 @@ if($row["vinder"] == $row["hold1"]){
 }
 
 // Semifinaler
-$hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 's'") or die(mysql_error());
+$hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 's'") or die(mysql_error());
 while($row = mysql_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $tabersemifinale[] = $row["hold2"];
@@ -46,7 +46,7 @@ if(isset($tabersemifinale[0])){$tabersemifinale1 = $tabersemifinale[0];}
 if(isset($tabersemifinale[0])){$tabersemifinale2 = $tabersemifinale[1];}
 
 // Kvartfinaler
-$hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'k'") or die(mysql_error());
+$hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'k'") or die(mysql_error());
 while($row = mysql_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $taberkvart[] = $row["hold2"];
@@ -68,7 +68,7 @@ if(isset($taberkvart[3])){$taberkvartfinale4 = $taberkvart[3];}
 
 
 // Finaler
-$hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jf'") or die(mysql_error());
+$hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jf'") or die(mysql_error());
 $row = mysql_fetch_array($hent);
 
 $vinder_jays = $row["vinder"];
@@ -81,7 +81,7 @@ if($row["vinder"] == $row["hold1"]){
 
 // Semifinaler
 $tabersemifinale = array();
-$hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'js'") or die(mysql_error());
+$hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'js'") or die(mysql_error());
 while($row = mysql_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $tabersemifinale[] = $row["hold2"];
@@ -95,7 +95,7 @@ if(isset($tabersemifinale[1])){$tabersemifinale2_jays = $tabersemifinale[1];}
 
 // Kvartfinaler
 $taberkvart = array();
-$hent = mysql_query("SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jk'") or die(mysql_error());
+$hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jk'") or die(mysql_error());
 while($row = mysql_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $taberkvart[] = $row["hold2"];
@@ -111,9 +111,9 @@ if(isset($taberkvart[2])){$taberkvartfinale3_jays = $taberkvart[2];}
 if(isset($taberkvart[3])){$taberkvartfinale4_jays = $taberkvart[3];}
 
 if(isset($_GET["afslut"]) && $turnering["ended"] != 1){
-    mysql_query("UPDATE hbf_turnering SET ended=1 WHERE turnering_id = '$turnerings_id'") or die(mysql_error());
+    mysqli_query($link,"UPDATE hbf_turnering SET ended=1 WHERE turnering_id = '$turnerings_id'") or die(mysql_error());
     // Kan kun opdateres en gang
-    $hent = mysql_query("SELECT * FROM hbf_rangliste WHERE turnerings_id = '$turnerings_id'");
+    $hent = mysqli_query($link,"SELECT * FROM hbf_rangliste WHERE turnerings_id = '$turnerings_id'");
     if(mysql_num_rows($hent)<9999999){
         // Ordinært
         $rangliste = $point[0];

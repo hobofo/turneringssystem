@@ -14,7 +14,7 @@ $turnerings_id = $turnering["turnering_id"];
     $kvartfinaler = $ipuljer;
     $kvartfinalerArr = array_unique(array_merge($alleredemed,$kvartfinaler));
     $kvartfinalertotal = arraytodbarray($kvartfinalerArr);
-    $opdater = mysql_query("UPDATE hbf_turnering SET kvartfinaler = '$kvartfinalertotal' WHERE turnering_id = '$turnerings_id'");
+    $opdater = mysqli_query($link,"UPDATE hbf_turnering SET kvartfinaler = '$kvartfinalertotal' WHERE turnering_id = '$turnerings_id'");
 
     $antalhold = sumdbarray($turnering["puljer"]);
   
@@ -122,7 +122,7 @@ die("dd");
  <div></div>
     <?
     $nummerOld = $nummer ="";
-    $puljer = mysql_query("SELECT * FROM hbf_puljer WHERE turnerings_id = '".$turnering["turnering_id"]."' order by pulje_nr, point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC,kampe DESC,pulje_id DESC") or die(mysql_error());
+    $puljer = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id = '".$turnering["turnering_id"]."' order by pulje_nr, point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC,kampe DESC,pulje_id DESC") or die(mysql_error());
 
     while($pulje = mysql_fetch_array($puljer)){
         

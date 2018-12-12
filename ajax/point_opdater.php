@@ -16,6 +16,6 @@ $point = "{".$or_vinder."},{".$or_finale."},{".$or_semi."},{".$or_kvart."},{".$j
 
 
 //$type1 $antaltype1 $type2 $antaltype2
-$opdater = mysql_query("UPDATE hbf_turnering SET point = '$point' WHERE turnering_id = '$turneringsid'") or die(mysql_error());
+$opdater = mysqli_query($link,"UPDATE hbf_turnering SET point = '$point' WHERE turnering_id = '$turneringsid'") or die(mysql_error());
 
 ?>

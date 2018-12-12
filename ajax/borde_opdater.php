@@ -7,6 +7,6 @@ $explode = explode("-",$bord);
 unset($explode[0]);
 $borde = arraytodbarray($explode);
 
-$opdater = mysql_query("UPDATE hbf_turnering SET borde = '$borde' WHERE turnering_id = '$turneringsid'") or die(mysql_error());
+$opdater = mysqli_query($link,"UPDATE hbf_turnering SET borde = '$borde' WHERE turnering_id = '$turneringsid'") or die(mysql_error());
 
 ?>
