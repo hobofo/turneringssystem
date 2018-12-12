@@ -21,7 +21,7 @@ $i = 0;
         $nuborde = array();
         $holdarray = array();
         $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysqli_error($link));
-        while($kamp = mysql_fetch_array($kampe)){
+        while($kamp = mysqli_fetch_array($kampe)){
             $nuborde[] = $kamp["bord"];
         }
         $ledigeborde = array_diff($borde,$nuborde);
@@ -31,7 +31,7 @@ $i = 0;
        
         for($i = 0;$i < $antal;$i++){
             $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by kampnr DESC") or die(mysqli_error($link));
-            while($kamp = mysql_fetch_array($kampe)){
+            while($kamp = mysqli_fetch_array($kampe)){
                 $holdarray[]= $kamp["hold1"];
                 $holdarray[]= $kamp["hold2"];
             }
@@ -44,11 +44,11 @@ $i = 0;
 
     // Sidste kamp
     $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by startet DESC, bord desc") or die(mysqli_error($link));
-    $sidstekamp = mysql_fetch_array($kampe);
+    $sidstekamp = mysqli_fetch_array($kampe);
     
     $i = 0;
     $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type = 'p' order by bord") or die(mysqli_error($link));
-    while($kamp = mysql_fetch_array($kampe)){
+    while($kamp = mysqli_fetch_array($kampe)){
         $i++;
         if($i == 1){
             echo "<div class='g12' style='margin:0;padding:0;'>";

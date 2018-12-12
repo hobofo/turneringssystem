@@ -17,7 +17,7 @@ $i = 0;
    if(mysqli_num_rows($kampe) > 0){
    echo "<div class='g12'><table>";
    $class="";
-   while($kamp = mysql_fetch_array($kampe)){
+   while($kamp = mysqli_fetch_array($kampe)){
         if($class==""){ $class = ""; } else {$class="";}
         echo "<tr style='background-color:#fff;'><td class='$class'>".hentnavne($kamp["hold1"]," og ")." </td></tr>";
         echo "<tr style='background-color:#fff;'><td class='$class'>".hentnavne($kamp["hold2"]," og ")."</td></tr>";

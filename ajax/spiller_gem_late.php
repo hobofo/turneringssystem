@@ -22,7 +22,7 @@ if($spiller1 ==$spiller2){
 }
 
 $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller1."' and deaktiv != '1'");
-$rowsp1 = mysql_fetch_array($result);
+$rowsp1 = mysqli_fetch_array($result);
 
 
 if(mysqli_num_rows($result) < 1){
@@ -36,7 +36,7 @@ if(mysqli_num_rows($result) < 1){
 
 if($spiller2 != ""){
     $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller2."' and deaktiv != '1'");
-    $rowsp2 = mysql_fetch_array($result);
+    $rowsp2 = mysqli_fetch_array($result);
 
     if(mysqli_num_rows($result) < 1){
      echo "Spiller 2 med telefonnummeret '$spiller2' findes ikke! Opret spilleren og prøv igen.";
@@ -76,7 +76,7 @@ if($turneringsid != ""){
                 FROM  `hbf_puljer` WHERE turnerings_id = '$turneringsid'
                 GROUP BY pulje_nr
                 ORDER BY antal");
-            $row = mysql_fetch_array($query);
+            $row = mysqli_fetch_array($query);
             $pulje_nr  = $row["pulje_nr"];
          
 
@@ -102,7 +102,7 @@ if($turneringsid != ""){
 
             // Indsætter kampe
             $result_partner = mysqli_query($link,"SELECT * FROM `hbf_puljer` where turnerings_id = '$turneringsid' and pulje_nr = '$pulje_nr' and spiller_id <> '$spiller_id' order by pulje_id DESC") or die(mysqli_error($link));
-            while($rowp = mysql_fetch_array($result_partner)){
+            while($rowp = mysqli_fetch_array($result_partner)){
                 $modstander =  $rowp["spiller_id"];
                 // Ser om kombinationen findes
                 $komp = mysqli_query($link,"SELECT *  FROM `hbf_kampe` where turnerings_id = '$turneringsid'  and ((hold1 = '$spiller_id' AND hold2 = '$modstander') OR (hold1 = '$modstander' AND hold2 = '$spiller_id') )") or die(mysqli_error($link));

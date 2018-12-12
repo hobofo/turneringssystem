@@ -6,10 +6,10 @@ $spiller2 = $_GET["sp2"];
 
 
 $result = mysqli_query($link,"SELECT * FROM hbf_spillere WHERE spiller_id = '$spiller1'");
-$rowspiller1 = mysql_fetch_array($result);
+$rowspiller1 = mysqli_fetch_array($result);
 
 $result = mysqli_query($link,"SELECT * FROM hbf_spillere WHERE spiller_id = '$spiller2'");
-$rowspiller2 = mysql_fetch_array($result);
+$rowspiller2 = mysqli_fetch_array($result);
 
 $turneringsid = $rowspiller1["turnering_id"];
 $spiller1 = $rowspiller1["spiller"];

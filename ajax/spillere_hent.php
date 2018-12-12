@@ -15,7 +15,7 @@ $turneringsid = $_GET["id"];
 $i = 0;
 $query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($link));
 $antalhold = mysqli_num_rows($query);
-while($row = mysql_fetch_array($query)){
+while($row = mysqli_fetch_array($query)){
     $i++;
     $spiller = hentbruger($row["spiller"]);
     $medspiller = hentbruger($row["medspiller"]);
@@ -43,7 +43,7 @@ if(mysqli_num_rows($query) > 0 ){
     $lose_overskrift .= "<h4 style='margin-top:10px;'>Løse</h4>";
 }
 $i = 0;
-while($row = mysql_fetch_array($query)){
+while($row = mysqli_fetch_array($query)){
 
     $spiller = hentbruger($row["spiller"]);
 

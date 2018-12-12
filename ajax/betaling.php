@@ -11,7 +11,7 @@ if(mysqli_num_rows($betaling) > 0){
 echo "<div class='g12'>";
    $class="";
    $i = 0;
-   while($spiller = mysql_fetch_array($betaling)){
+   while($spiller = mysqli_fetch_array($betaling)){
         if($class==""){ $class = ""; } else {$class="";}
         $i++;
         $bruger = hentbruger($spiller["spiller"]);

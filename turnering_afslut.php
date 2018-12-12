@@ -21,7 +21,7 @@ unset($value);
 
 // Finaler
 $hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'f'") or die(mysqli_error($link));
-$row = mysql_fetch_array($hent);
+$row = mysqli_fetch_array($hent);
 
 $vinder = $row["vinder"];
 
@@ -33,7 +33,7 @@ if($row["vinder"] == $row["hold1"]){
 
 // Semifinaler
 $hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 's'") or die(mysqli_error($link));
-while($row = mysql_fetch_array($hent)){
+while($row = mysqli_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $tabersemifinale[] = $row["hold2"];
     } else {
@@ -47,7 +47,7 @@ if(isset($tabersemifinale[0])){$tabersemifinale2 = $tabersemifinale[1];}
 
 // Kvartfinaler
 $hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'k'") or die(mysqli_error($link));
-while($row = mysql_fetch_array($hent)){
+while($row = mysqli_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $taberkvart[] = $row["hold2"];
     } else {
@@ -69,7 +69,7 @@ if(isset($taberkvart[3])){$taberkvartfinale4 = $taberkvart[3];}
 
 // Finaler
 $hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jf'") or die(mysqli_error($link));
-$row = mysql_fetch_array($hent);
+$row = mysqli_fetch_array($hent);
 
 $vinder_jays = $row["vinder"];
 
@@ -82,7 +82,7 @@ if($row["vinder"] == $row["hold1"]){
 // Semifinaler
 $tabersemifinale = array();
 $hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'js'") or die(mysqli_error($link));
-while($row = mysql_fetch_array($hent)){
+while($row = mysqli_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $tabersemifinale[] = $row["hold2"];
     } else {
@@ -96,7 +96,7 @@ if(isset($tabersemifinale[1])){$tabersemifinale2_jays = $tabersemifinale[1];}
 // Kvartfinaler
 $taberkvart = array();
 $hent = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type = 'jk'") or die(mysqli_error($link));
-while($row = mysql_fetch_array($hent)){
+while($row = mysqli_fetch_array($hent)){
     if($row["vinder"] == $row["hold1"]){
         $taberkvart[] = $row["hold2"];
     } else {

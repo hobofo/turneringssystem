@@ -9,7 +9,7 @@ $kamp_id = $_POST["kamp_id"];
 $turneringsid = $_POST["turneringsid"];
 
 $query = mysqli_query($link,"SELECT * FROM hbf_kampe where kamp_id  = '$kamp_id'") or die(mysqli_error($link));
-$row = mysql_fetch_array($query);
+$row = mysqli_fetch_array($query);
 
 if($resultathold1 == $resultathold2){
     $vinder = 0;

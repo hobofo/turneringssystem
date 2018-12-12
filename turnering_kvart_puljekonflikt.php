@@ -25,7 +25,7 @@ if(mysqli_num_rows($finaler)>0 && $startforfra == false){
 foreach($puljerArray as $puljenr => $puljeinfo){
  $i = 0;
  $results = mysqli_query($link,"SELECT * FROM hbf_puljer where turnerings_id = '$turnerings_id' and pulje_nr = '$puljenr'  order by point DESC, (maal_scoret-maal_gaaetind) DESC,maal_scoret DESC") or die(mysqli_error($link));
- while($pulje = mysql_fetch_array($results)){
+ while($pulje = mysqli_fetch_array($results)){
      $i++;
     $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering = '$i' WHERE pulje_id = ".$pulje["pulje_id"]." AND turnerings_id = '$turnerings_id'");
  }
@@ -56,7 +56,7 @@ WHERE (
 ";
 $result = mysqli_query($link,"$sql") or die(mysqli_error($link));
 
-while($spiller = mysql_fetch_array($result)){
+while($spiller = mysqli_fetch_array($result)){
     $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering_konflikt = '".$spiller["konfliknr"]."' where pulje_id in (".$spiller["pulje_id"].") AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
 
 }
@@ -100,14 +100,14 @@ if($konflikter < 2){
         $q = 1;
 
         $hent = mysqli_query($link,"SELECT DISTINCT `rangering_konflikt` as konflikt FROM `hbf_puljer` WHERE `turnerings_id` = '$turnerings_id' and rangering_konflikt != 0");
-        while($konflikt = mysql_fetch_array($hent)){
+        while($konflikt = mysqli_fetch_array($hent)){
             echo "<fieldset><label></label>";
             echo "<section><label>Konflikt $q <br /><span>Sæt venligst hold i den korrekte rækkefølge</span></label><div>";
             echo "<select name='pulje_".$konflikt["konflikt"]."' class='multiple' id='multiple' multiple>";
 
 
             $result = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id =  '$turnerings_id' AND rangering_konflikt = ".$konflikt["konflikt"]."") or die(mysqli_error($link));
-            while($spiller = mysql_fetch_array($result)){
+            while($spiller = mysqli_fetch_array($result)){
                 $spiller_id = $spiller["spiller_id"];
                 echo "  <option value='$spiller_id'>".hentnavne($spiller_id,"-")."</option>";
 

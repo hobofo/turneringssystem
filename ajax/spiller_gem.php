@@ -28,7 +28,7 @@ if($spiller1 ==$spiller2){
 }
 
 $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller1."' and deaktiv != '1'");
-$rowsp1 = mysql_fetch_array($result);
+$rowsp1 = mysqli_fetch_array($result);
 
 
 if(mysqli_num_rows($result) < 1){
@@ -45,7 +45,7 @@ if(mysqli_num_rows($result) < 1){
 
 if($spiller2 != ""){
     $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller2."' and deaktiv != '1'");
-    $rowsp2 = mysql_fetch_array($result);
+    $rowsp2 = mysqli_fetch_array($result);
 
     if(mysqli_num_rows($result) < 1){
      echo "0##Spiller 2 med telefonnummeret '$spiller2' findes ikke! Opret spilleren og prøv igen.";

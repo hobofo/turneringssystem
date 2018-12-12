@@ -120,7 +120,7 @@ $bruger = hentbruger($bruger_id);
   $newdate = date ( 'Y-m-d H:i:s' , $newdate );
 
   $rangliste = mysqli_query($link,"SELECT * FROM hbf_rangliste WHERE date > '$newdate' and bruger_id = '".$bruger["bruger_id"]."' ORDER BY DATE DESC") or die(mysqli_error($link));
-  while($rowrang = mysql_fetch_array($rangliste)){
+  while($rowrang = mysqli_fetch_array($rangliste)){
     ?>
     <tbody>
       <tr>
@@ -159,7 +159,7 @@ $bruger = hentbruger($bruger_id);
   <?php
 
   $medlemskaber = mysqli_query($link,"SELECT * FROM hbf_medlemskaber WHERE bruger_id = '".$bruger["bruger_id"]."' ORDER BY registreret DESC") or die(mysqli_error($link));
-  while($rowmedlemskab = mysql_fetch_array($medlemskaber)){
+  while($rowmedlemskab = mysqli_fetch_array($medlemskaber)){
     ?>
     <tbody>
       <tr>

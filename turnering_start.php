@@ -20,7 +20,7 @@ if(isset($_POST["turneringsid"])){
     // Sætter ind i puljer
     $results = mysqli_query($link,"DELETE FROM hbf_puljer WHERE turnerings_id = '$turneringsid'") or die(mysqli_error($link));
     $result = mysqli_query($link,"SELECT *, rang as ranglistetotal FROM `hbf_spillere` a where turnering_id = '$turneringsid' and primaer = '1' order by ranglistetotal DESC,spiller_id");
-    while($row = mysql_fetch_array($result)){
+    while($row = mysqli_fetch_array($result)){
         $spiller_id = $row["spiller_id"];
         $holdpulje = $pulje;
         if(isset($puljerArray[$pulje+1])){ $pulje++; } else {$pulje = 0;}      
@@ -32,13 +32,13 @@ if(isset($_POST["turneringsid"])){
     $results = mysqli_query($link,"DELETE FROM hbf_kampe WHERE turnerings_id = '$turneringsid'") or die(mysqli_error($link));
     $result = mysqli_query($link,"SELECT *  FROM `hbf_puljer` where turnerings_id = '$turneringsid' ORDER BY pulje_id DESC") or die(mysqli_error($link));
 
-    while($row = mysql_fetch_array($result)){
+    while($row = mysqli_fetch_array($result)){
         $spiller_id =  $row["spiller_id"];
         $pulje_nr =  $row["pulje_nr"];
         $i++;
 
         $result_partner = mysqli_query($link,"SELECT * FROM `hbf_puljer` where turnerings_id = '$turneringsid' and pulje_nr = '$pulje_nr' and spiller_id <> '$spiller_id' order by pulje_id DESC") or die(mysqli_error($link));
-        while($rowp = mysql_fetch_array($result_partner)){
+        while($rowp = mysqli_fetch_array($result_partner)){
             $modstander =  $rowp["spiller_id"];
             // Ser om kombinationen findes
             $komp = mysqli_query($link,"SELECT *  FROM `hbf_kampe` where turnerings_id = '$turneringsid'  and ((hold1 = '$spiller_id' AND hold2 = '$modstander') OR (hold1 = '$modstander' AND hold2 = '$spiller_id') )") or die(mysqli_error($link));
