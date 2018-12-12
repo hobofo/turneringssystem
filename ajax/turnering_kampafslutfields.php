@@ -2,7 +2,7 @@
 require_once("../functions.php");
 
 $kamp_id = $_GET["kamp_id"];
-$query = mysqli_query($link,"SELECT * FROM hbf_kampe where kamp_id  = '$kamp_id'") or die(mysqli_error($link));
+$query = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_kampe where kamp_id  = '$kamp_id'") or die(mysqli_error($GLOBALS['link']));
 $row = mysqli_fetch_array($query);
 //$turnering = hentturnering();
 $i = 0;

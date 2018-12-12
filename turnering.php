@@ -3,12 +3,12 @@ require_once("functions.php");
 
 
 if(isset($_GET["new"])){
-  $query = mysqli_query($link,"INSERT INTO hbf_turnering (date) values (now())");
+  $query = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_turnering (date) values (now())");
   $id = mysqli_insert_id($link);
   header("location: turnering.php");
 }
 // Henter seneste turnerings id
-$result = mysqli_query($link,"SELECT turnering_id from hbf_turnering order by date desc limit 0,1") or die(mysqli_error($link));
+$result = mysqli_query($GLOBALS['link'],"SELECT turnering_id from hbf_turnering order by date desc limit 0,1") or die(mysqli_error($GLOBALS['link']));
 $row = mysqli_fetch_array($result);
 if(mysqli_num_rows($result) > 0){
   $turneringsid = $row["turnering_id"];

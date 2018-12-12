@@ -11,12 +11,12 @@ foreach($_POST as $index => $test){
 if(count($ipuljer) > 0){
     $spillerids = join(',',$ipuljer);
 
-    $hent_startnummer = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE spiller_id in ($spillerids) and turnerings_id = '$turnerings_id' order by rangering_total") or die(mysqli_error($link));
+    $hent_startnummer = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE spiller_id in ($spillerids) and turnerings_id = '$turnerings_id' order by rangering_total") or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent_startnummer);
     $nummer = $row["rangering_total"];
 
     foreach($ipuljer as $spiller_id){
-           $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering_total = '$nummer'  WHERE turnerings_id = '$turnerings_id' AND spiller_id = '$spiller_id' ") or die(mysqli_error($link));
+           $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET rangering_total = '$nummer'  WHERE turnerings_id = '$turnerings_id' AND spiller_id = '$spiller_id' ") or die(mysqli_error($GLOBALS['link']));
            $nummer++;
     }
 }
@@ -27,7 +27,7 @@ $antalhold = sumdbarray($turnering["puljer"]);
 
 if($antalhold >= 16){
     
-    $henterhold = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id = '$turnerings_id' and rangering_total  = 16 ORDER BY rangering_total") or die(mysqli_error($link));
+    $henterhold = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE turnerings_id = '$turnerings_id' and rangering_total  = 16 ORDER BY rangering_total") or die(mysqli_error($GLOBALS['link']));
     $hold8 = mysqli_fetch_array($henterhold);
     $ensspillere[] = $hold8["spiller_id"];
     $point = $hold8["point"];
@@ -44,7 +44,7 @@ if($antalhold >= 16){
             $i++;
             $nyrangliste = $rangliste + $i;
             $sql = "SELECT * FROM hbf_puljer WHERE rangering_total = '$nyrangliste' AND rangering = '$rangering' AND turnerings_id = '$turnerings_id' and point = '$point' and (maal_scoret-maal_gaaetind) = '$diff' and maal_scoret ='$scoret'  ORDER BY rangering_total";
-            $henterenshold = mysqli_query($link,$sql) or die(mysqli_error($link));
+            $henterenshold = mysqli_query($GLOBALS['link'],$sql) or die(mysqli_error($GLOBALS['link']));
             if(mysqli_num_rows($henterenshold) > 0){
                 $hold = mysqli_fetch_array($henterenshold);
                 $frem = true;
@@ -69,7 +69,7 @@ if($antalhold >= 16){
             $i++;
             $nyrangliste = $rangliste - $i;
             $sql = "SELECT * FROM hbf_puljer WHERE rangering_total = '$nyrangliste' AND rangering = '$rangering' AND turnerings_id = '$turnerings_id' and point = '$point' and (maal_scoret-maal_gaaetind) = '$diff' and maal_scoret ='$scoret'  ORDER BY rangering_total";
-            $henterenshold = mysqli_query($link,$sql) or die(mysqli_error($link));
+            $henterenshold = mysqli_query($GLOBALS['link'],$sql) or die(mysqli_error($GLOBALS['link']));
             if(mysqli_num_rows($henterenshold) > 0){
                 $hold = mysqli_fetch_array($henterenshold);
                 $ensspillere[] = $hold["spiller_id"];
@@ -117,7 +117,7 @@ if($antalhold >= 16){
 
             $spillere = join(',',$ensspillere);
             
-            $result = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id =  '$turnerings_id' AND spiller_id in($spillere) ") or die(mysqli_error($link));
+            $result = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE turnerings_id =  '$turnerings_id' AND spiller_id in($spillere) ") or die(mysqli_error($GLOBALS['link']));
             while($spiller = mysqli_fetch_array($result)){
                 $spiller_id = $spiller["spiller_id"];
                 echo "  <option value='$spiller_id'>".hentnavne($spiller_id,"-")."</option>";

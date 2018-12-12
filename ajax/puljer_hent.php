@@ -5,7 +5,7 @@ $turneringsid = $_GET["id"];
 $antalpuljer = $_GET["antal"];
 $i = 0;
 
-$query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($link));
+$query = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($GLOBALS['link']));
 $antal = mysqli_num_rows($query);
 
 $antalmulige = floor($antal/2);

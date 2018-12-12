@@ -119,7 +119,7 @@ $bruger = hentbruger($bruger_id);
   $newdate = strtotime ( '-8 WEEKS' , strtotime ( $date ) ) ;
   $newdate = date ( 'Y-m-d H:i:s' , $newdate );
 
-  $rangliste = mysqli_query($link,"SELECT * FROM hbf_rangliste WHERE date > '$newdate' and bruger_id = '".$bruger["bruger_id"]."' ORDER BY DATE DESC") or die(mysqli_error($link));
+  $rangliste = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_rangliste WHERE date > '$newdate' and bruger_id = '".$bruger["bruger_id"]."' ORDER BY DATE DESC") or die(mysqli_error($GLOBALS['link']));
   while($rowrang = mysqli_fetch_array($rangliste)){
     ?>
     <tbody>
@@ -158,7 +158,7 @@ $bruger = hentbruger($bruger_id);
   </thead>
   <?php
 
-  $medlemskaber = mysqli_query($link,"SELECT * FROM hbf_medlemskaber WHERE bruger_id = '".$bruger["bruger_id"]."' ORDER BY registreret DESC") or die(mysqli_error($link));
+  $medlemskaber = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_medlemskaber WHERE bruger_id = '".$bruger["bruger_id"]."' ORDER BY registreret DESC") or die(mysqli_error($GLOBALS['link']));
   while($rowmedlemskab = mysqli_fetch_array($medlemskaber)){
     ?>
     <tbody>

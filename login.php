@@ -7,9 +7,9 @@ if(isset($_POST["password"])){
 
     $username = mysqli_real_escape_string($link, $_POST['username']);
     $password = ($_POST['password']);
-    $result1 = mysqli_query($link,"SELECT * FROM hbf_indstillinger WHERE short = 'password' AND setting ='$password'");
-    $result2 = mysqli_query($link,"SELECT * FROM hbf_indstillinger WHERE short = 'brugernavn' AND setting ='$username'");
-	$result3 = mysqli_query($link,"SELECT * FROM *");
+    $result1 = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_indstillinger WHERE short = 'password' AND setting ='$password'");
+    $result2 = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_indstillinger WHERE short = 'brugernavn' AND setting ='$username'");
+	$result3 = mysqli_query($GLOBALS['link'],"SELECT * FROM *");
     
 	if(mysqli_num_rows($result1) && mysqli_num_rows($result2) )
 	{

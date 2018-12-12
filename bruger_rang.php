@@ -43,7 +43,7 @@
                         $newdate = strtotime ( '-10 YEARS' , strtotime ( $date ) ) ;
                         $newdate = date ( 'Y-m-d H:i:s' , $newdate );
 
-                        $rangliste = mysqli_query($link,"SELECT * FROM hbf_rangliste WHERE date > '$newdate' and bruger_id = '".$bruger["bruger_id"]."' ORDER BY DATE DESC") or die(mysqli_error($link));
+                        $rangliste = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_rangliste WHERE date > '$newdate' and bruger_id = '".$bruger["bruger_id"]."' ORDER BY DATE DESC") or die(mysqli_error($GLOBALS['link']));
                         while($rowrang = mysqli_fetch_array($rangliste)){
                         ?>
                         <tbody>

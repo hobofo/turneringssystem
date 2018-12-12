@@ -13,7 +13,7 @@ $hold = $lose_overskrift = $lose = "";
 
 $turneringsid = $_GET["id"];
 $i = 0;
-$query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($link));
+$query = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller <> ''") or die(mysqli_error($GLOBALS['link']));
 $antalhold = mysqli_num_rows($query);
 while($row = mysqli_fetch_array($query)){
     $i++;
@@ -30,11 +30,11 @@ while($row = mysqli_fetch_array($query)){
  } 
 $countloese = 0;
 if($kunloese){
-    $query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller = '' AND spiller_id <> '".$spillerid."'") or die(mysqli_error($link));
+    $query = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller = '' AND spiller_id <> '".$spillerid."'") or die(mysqli_error($GLOBALS['link']));
     
     
 } else {
-    $query = mysqli_query($link,"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller = ''") or die(mysqli_error($link));
+    $query = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_spillere where turnering_id = '$turneringsid' AND primaer = '1' AND medspiller = ''") or die(mysqli_error($GLOBALS['link']));
 
     $countloese = mysqli_num_rows($query);
 }

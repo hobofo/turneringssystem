@@ -5,7 +5,7 @@ $turnering = hentturnering();
 $turneringsid = $turnering["turnering_id"];
 $i = 0;
 
- $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and vinder <> '' and type = 'p' order by kampnr") or die(mysqli_error($link));
+ $kampe = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and vinder <> '' and type = 'p' order by kampnr") or die(mysqli_error($GLOBALS['link']));
 // <h4 style='margin-bottom:5px;'>Afsluttede kampe</h4>
  ?>
    

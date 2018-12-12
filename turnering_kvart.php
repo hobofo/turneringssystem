@@ -16,20 +16,20 @@ if(isset($_GET["start"])){
  if(count($ipuljer) > 0){
     $spillerids = join(',',$ipuljer);
 
-    $hent_startnummer = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE spiller_id in ($spillerids) and turnerings_id = '$turnerings_id' order by rangering_total") or die(mysqli_error($link));
+    $hent_startnummer = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE spiller_id in ($spillerids) and turnerings_id = '$turnerings_id' order by rangering_total") or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent_startnummer);
     $nummer = $row["rangering_total"];
 
     foreach($ipuljer as $spiller_id){
-     $opdater = mysqli_query($link,"UPDATE hbf_puljer SET rangering_total = '$nummer'  WHERE turnerings_id = '$turnerings_id' AND spiller_id = '$spiller_id' ") or die(mysqli_error($link));
+     $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET rangering_total = '$nummer'  WHERE turnerings_id = '$turnerings_id' AND spiller_id = '$spiller_id' ") or die(mysqli_error($GLOBALS['link']));
      $nummer++;
  }
 }
 
 
     // Indsætter kampe
-mysqli_query($link,"DELETE FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type IN ('k','jk','s','js','f','jf')") or die(mysqli_error($link));
-mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 0 WHERE turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
+mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE turnerings_id = '$turnerings_id' AND type IN ('k','jk','s','js','f','jf')") or die(mysqli_error($GLOBALS['link']));
+mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 0 WHERE turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
 
     // Antal hold
 $antalhold = sumdbarray($turnering["puljer"]);
@@ -50,15 +50,15 @@ $kampspiller = array();
 $stop = false;
 
     // Skriver semifinaler og finale
-$insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','s','5','0','0')")or die(mysqli_error($link));
+$insert = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','s','5','0','0')")or die(mysqli_error($GLOBALS['link']));
 $kamp_semi_1 = mysqli_insert_id($link);
-$insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','s','6','0','0')")or die(mysqli_error($link));
+$insert = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','s','6','0','0')")or die(mysqli_error($GLOBALS['link']));
 $kamp_semi_2 = mysqli_insert_id($link);
-$insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','f','7','0','0')")or die(mysqli_error($link));
+$insert = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','f','7','0','0')")or die(mysqli_error($GLOBALS['link']));
 $kamp_finale = mysqli_insert_id($link);
 
     // Hvis mindre end 8 hold - fordel hold
-$hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($link));
+$hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($GLOBALS['link']));
 $holdcount = mysqli_num_rows($hent);
 
 
@@ -66,124 +66,124 @@ $holdcount = mysqli_num_rows($hent);
 
     // Hvis der er 0 hold (Burde aldrig ske) 
 if(in_array($holdcount, array(0))){
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_finale'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_finale'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 
     // Hvis der er 1 hold, sæt det hold til vinderen, og fjern semifinalerne.
 if(in_array($holdcount, array(1))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."', vinder = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."', vinder = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link']));
 
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 
     // Hvis der er 2 hold
 if(in_array($holdcount, array(2))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($GLOBALS['link']));
 
         // Sæt hold 1 i finalen.
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link']));
 
         // Sæt hold 2 i finalen
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link']));
 
         // Fjern semifinaler
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 
     // Hvis der er 3 hold
 if(in_array($holdcount, array(3))){
 
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($GLOBALS['link']));
 
         // Sætter seed 1 i finalen.
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link)); 
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link'])); 
 
         // Sætter seed 2 i semi
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
         // Sætter seed 3 i semi
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 
     // Hvis der er 4 hold
 if(in_array($holdcount, array(4))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,4")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,4")or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link)); 
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link'])); 
 }
 
     // Hvis der er 5 hold.
 if(in_array($holdcount, array(5))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 }
 
 if(in_array($holdcount, array(6))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 }
 
 if(in_array($holdcount, array(7))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 }
 
     // Sætter kampe på baggrund af rang.
 $kampprogram = array();
 $kampprogram[] = "";
-$hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 AND kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total")or die(mysqli_error($link));
+$hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 AND kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total")or die(mysqli_error($GLOBALS['link']));
 while($row = mysqli_fetch_array($hent)){
     $kampprogram[] = $row["spiller_id"];
 }
@@ -310,126 +310,126 @@ $kampspiller = array();
 $stop = false;
 
     // Skriver semifinaler og finale
-$insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','js','5','0','0')")or die(mysqli_error($link));
+$insert = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','js','5','0','0')")or die(mysqli_error($GLOBALS['link']));
 $kamp_semi_1 = mysqli_insert_id($link);
-$insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','js','6','0','0')")or die(mysqli_error($link));
+$insert = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','js','6','0','0')")or die(mysqli_error($GLOBALS['link']));
 $kamp_semi_2 = mysqli_insert_id($link);
-$insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','jf','7','0','0')")or die(mysqli_error($link));
+$insert = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,type,kampnr,pulje,parameter) values ('$turnerings_id','0','0','jf','7','0','0')")or die(mysqli_error($GLOBALS['link']));
 $kamp_finale = mysqli_insert_id($link);
 
     // Hvis mindre end 8 hold - fordel hold
-$hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($link));
+$hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($GLOBALS['link']));
 $holdcount = mysqli_num_rows($hent);
 
 
 if(in_array($holdcount, array(0))){
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_finale'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_finale'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 if(in_array($holdcount, array(1))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."', vinder = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."', vinder = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link']));
 
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 if(in_array($holdcount, array(2))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($GLOBALS['link']));
 
         // Sæt hold 1 i finalen.
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link']));
 
         // Sæt hold 2 i finalen
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link']));
 
         // Fjern semifinaler
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_1'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 if(in_array($holdcount, array(3))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($GLOBALS['link']));
 
         // Sætter seed 1 i finalen.
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($link)); 
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_finale'") or die(mysqli_error($GLOBALS['link'])); 
 
         // Sætter seed 2 i semi
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
         // Sætter seed 3 i semi
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
-    $fjern = mysqli_query($link,"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
+    $fjern = mysqli_query($GLOBALS['link'],"DELETE FROM hbf_kampe WHERE kamp_id ='$kamp_semi_2'");
 }
 if(in_array($holdcount, array(4))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,4")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,4")or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link)); 
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link'])); 
 }
 if(in_array($holdcount, array(5))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,3")or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold1 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 }
 
 if(in_array($holdcount, array(6))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,2")or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_2'") or die(mysqli_error($GLOBALS['link']));
 
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 }
 if(in_array($holdcount, array(7))){
-    $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($link));
+    $hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total $desc limit 0,1")or die(mysqli_error($GLOBALS['link']));
     $row = mysqli_fetch_array($hent);
-    $opdater = mysqli_query($link,"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-    $opdater = mysqli_query($link,"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($link));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_puljer SET kvartfinale = 1 WHERE spiller_id = '".$row["spiller_id"]."' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($GLOBALS['link']));
+    $opdater = mysqli_query($GLOBALS['link'],"UPDATE hbf_kampe SET hold2 = '".$row["spiller_id"]."' WHERE turnerings_id = '$turnerings_id' AND kamp_id = '$kamp_semi_1'") or die(mysqli_error($GLOBALS['link']));
 
 }
 
     // Sætter kampe på baggrund af rang.
 $kampprogram = array();
 $kampprogram[] = "";
-$hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 16 AND rangering_total > 8 AND kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total")or die(mysqli_error($link));
+$hent = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_puljer WHERE rangering_total <= 16 AND rangering_total > 8 AND kvartfinale = 0 AND turnerings_id = '$turnerings_id' ORDER by rangering_total")or die(mysqli_error($GLOBALS['link']));
 while($row = mysqli_fetch_array($hent)){
     $kampprogram[] = $row["spiller_id"];
 }

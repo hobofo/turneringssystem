@@ -27,7 +27,7 @@ if($spiller1 ==$spiller2){
  return;
 }
 
-$result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller1."' and deaktiv != '1'");
+$result = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_brugere where telefon = '".$spiller1."' and deaktiv != '1'");
 $rowsp1 = mysqli_fetch_array($result);
 
 
@@ -44,7 +44,7 @@ if(mysqli_num_rows($result) < 1){
 }
 
 if($spiller2 != ""){
-    $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller2."' and deaktiv != '1'");
+    $result = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_brugere where telefon = '".$spiller2."' and deaktiv != '1'");
     $rowsp2 = mysqli_fetch_array($result);
 
     if(mysqli_num_rows($result) < 1){
@@ -63,7 +63,7 @@ if($spiller2 != ""){
 $turneringsid = $_POST["turneringsid"];
 
 // Tester om spiller 1 allerede er en den af turneringen
-$results = mysqli_query($link,"SELECT * FROM hbf_spillere where spiller = '$spiller1' and turnering_id = '$turneringsid'");
+$results = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_spillere where spiller = '$spiller1' and turnering_id = '$turneringsid'");
 if(mysqli_num_rows($results) > 0){
     echo "0##$navn1 ($tlf1) er allerede tilmeldt turneringen.";
     return;
@@ -71,7 +71,7 @@ if(mysqli_num_rows($results) > 0){
 
 // Tester om spiller 1 allerede er en den af turneringen
 if($spiller2 != ""){
-    $results = mysqli_query($link,"SELECT * FROM hbf_spillere where spiller in ('$spiller2') and turnering_id = '$turneringsid'");
+    $results = mysqli_query($GLOBALS['link'],"SELECT * FROM hbf_spillere where spiller in ('$spiller2') and turnering_id = '$turneringsid'");
     if(mysqli_num_rows($results) > 0){
         echo "0##$navn2 ($tlf2) er allerede tilmeldt turneringen.";
         return;
@@ -84,8 +84,8 @@ if($turneringsid != ""){
       $bruger1 = hentbruger($spiller1);
       $bruger2 = hentbruger($spiller2);
       $rang = $bruger1["rangliste"] + $bruger2["rangliste"];
-      $query = mysqli_query($link,"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller1','$spiller2','1',$rang,$betaltspiller1)");
-      $query = mysqli_query($link,"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller2','$spiller1','0',$rang,$betaltspiller2)");
+      $query = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller1','$spiller2','1',$rang,$betaltspiller1)");
+      $query = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,rang,betalt) values ('$turneringsid','$spiller2','$spiller1','0',$rang,$betaltspiller2)");
 
       echo "1##$navn1 og $navn2 er tilmeldt som et hold ";
 
@@ -98,7 +98,7 @@ if($turneringsid != ""){
       }
   } else {
       $bruger1 = hentbruger($spiller1);
-      $query = mysqli_query($link,"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,betalt) values ('$turneringsid','$spiller1','','1',$betaltspiller1)");
+      $query = mysqli_query($GLOBALS['link'],"INSERT INTO hbf_spillere (turnering_id,spiller,medspiller,primaer,betalt) values ('$turneringsid','$spiller1','','1',$betaltspiller1)");
 
       echo "1##$navn1 er tilmeldt som løs \n";
       

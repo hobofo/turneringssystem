@@ -8,10 +8,10 @@ if($_GET["type"]== "borde"){
     $brugernavn = $_POST["brugernavn"];
     $final_10 = $_POST["final_10"];
 
-    $query = mysqli_query($link,"UPDATE hbf_indstillinger SET setting = '$borde' WHERE short = 'borde'");
-    $query = mysqli_query($link,"UPDATE hbf_indstillinger SET setting = '$password' WHERE short = 'password'");
-    $query = mysqli_query($link,"UPDATE hbf_indstillinger SET setting = '$brugernavn' WHERE short = 'brugernavn'");
-    $query = mysqli_query($link,"UPDATE hbf_indstillinger SET setting = '$final_10' WHERE short = 'final_10'");
+    $query = mysqli_query($GLOBALS['link'],"UPDATE hbf_indstillinger SET setting = '$borde' WHERE short = 'borde'");
+    $query = mysqli_query($GLOBALS['link'],"UPDATE hbf_indstillinger SET setting = '$password' WHERE short = 'password'");
+    $query = mysqli_query($GLOBALS['link'],"UPDATE hbf_indstillinger SET setting = '$brugernavn' WHERE short = 'brugernavn'");
+    $query = mysqli_query($GLOBALS['link'],"UPDATE hbf_indstillinger SET setting = '$final_10' WHERE short = 'final_10'");
     opdaterrangliste();
     echo "Indstillingerne er opdateret";
 }
@@ -32,7 +32,7 @@ if($_GET["type"]== "rangliste"){
 
     $rangliste = stringtodbarray($rangliste);
 
-    $query = mysqli_query($link,"UPDATE hbf_indstillinger SET setting = '$rangliste' WHERE short = 'rangliste$nummer'");
+    $query = mysqli_query($GLOBALS['link'],"UPDATE hbf_indstillinger SET setting = '$rangliste' WHERE short = 'rangliste$nummer'");
 
     echo "Rangliste skabelon nummer ".($nummer+1)." er opdateret";
 }
