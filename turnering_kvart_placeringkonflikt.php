@@ -45,7 +45,7 @@ if($antalhold >= 16){
             $nyrangliste = $rangliste + $i;
             $sql = "SELECT * FROM hbf_puljer WHERE rangering_total = '$nyrangliste' AND rangering = '$rangering' AND turnerings_id = '$turnerings_id' and point = '$point' and (maal_scoret-maal_gaaetind) = '$diff' and maal_scoret ='$scoret'  ORDER BY rangering_total";
             $henterenshold = mysqli_query($link,$sql) or die(mysqli_error($link));
-            if(mysql_num_rows($henterenshold) > 0){
+            if(mysqli_num_rows($henterenshold) > 0){
                 $hold = mysql_fetch_array($henterenshold);
                 $frem = true;
                 $ensspillere[] = $hold["spiller_id"];
@@ -70,7 +70,7 @@ if($antalhold >= 16){
             $nyrangliste = $rangliste - $i;
             $sql = "SELECT * FROM hbf_puljer WHERE rangering_total = '$nyrangliste' AND rangering = '$rangering' AND turnerings_id = '$turnerings_id' and point = '$point' and (maal_scoret-maal_gaaetind) = '$diff' and maal_scoret ='$scoret'  ORDER BY rangering_total";
             $henterenshold = mysqli_query($link,$sql) or die(mysqli_error($link));
-            if(mysql_num_rows($henterenshold) > 0){
+            if(mysqli_num_rows($henterenshold) > 0){
                 $hold = mysql_fetch_array($henterenshold);
                 $ensspillere[] = $hold["spiller_id"];
             } else {

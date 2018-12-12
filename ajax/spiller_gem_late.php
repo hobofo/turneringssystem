@@ -25,7 +25,7 @@ $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spil
 $rowsp1 = mysql_fetch_array($result);
 
 
-if(mysql_num_rows($result) < 1){
+if(mysqli_num_rows($result) < 1){
  echo "Spiller 1 med telefonnummeret '$spiller1' findes ikke! Opret spilleren og prøv igen.";
  return;
 } else {
@@ -38,7 +38,7 @@ if($spiller2 != ""){
     $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller2."' and deaktiv != '1'");
     $rowsp2 = mysql_fetch_array($result);
 
-    if(mysql_num_rows($result) < 1){
+    if(mysqli_num_rows($result) < 1){
      echo "Spiller 2 med telefonnummeret '$spiller2' findes ikke! Opret spilleren og prøv igen.";
      return;
     } else {
@@ -50,7 +50,7 @@ if($spiller2 != ""){
 
 // Tester om spiller 1 allerede er en den af turneringen
 $results = mysqli_query($link,"SELECT * FROM hbf_spillere where spiller = '$spiller1' and turnering_id = '$turneringsid'");
-if(mysql_num_rows($results) > 0){
+if(mysqli_num_rows($results) > 0){
     echo "$navn1 ($tlf1) er allerede tilmeldt turneringen.";
     return;
 }
@@ -58,7 +58,7 @@ if(mysql_num_rows($results) > 0){
 // Tester om spiller 1 allerede er en den af turneringen
 if($spiller2 != ""){
     $results = mysqli_query($link,"SELECT * FROM hbf_spillere where spiller in ('$spiller2') and turnering_id = '$turneringsid'");
-    if(mysql_num_rows($results) > 0){
+    if(mysqli_num_rows($results) > 0){
         echo "$navn2 ($tlf2) er allerede tilmeldt turneringen.";
         return;
     }
@@ -106,7 +106,7 @@ if($turneringsid != ""){
                 $modstander =  $rowp["spiller_id"];
                 // Ser om kombinationen findes
                 $komp = mysqli_query($link,"SELECT *  FROM `hbf_kampe` where turnerings_id = '$turneringsid'  and ((hold1 = '$spiller_id' AND hold2 = '$modstander') OR (hold1 = '$modstander' AND hold2 = '$spiller_id') )") or die(mysqli_error($link));
-                if(mysql_num_rows($komp)< 1){
+                if(mysqli_num_rows($komp)< 1){
                         $rang1 = hentrang($spiller_id);
                         $rang2 = hentrang($modstander);
                         $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,rang1,rang2,type,kampnr,pulje,parameter) values ('$turneringsid','$spiller_id','$modstander','$rang1','$rang2','p','0','$pulje_nr','0')")or die(mysqli_error($link));

@@ -7,14 +7,14 @@ $turnering = hentturnering();
 $turneringsid = $turnering["turnering_id"];
 $i = 0;
  $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord = '' and type = 'p' order by kampnr") or die(mysqli_error($link));
- $antal = mysql_num_rows($kampe);
+ $antal = mysqli_num_rows($kampe);
  // <h4 style='margin-bottom:5px;'>Kommende kampe (<?=$antal)</h4>
 ?>
 
 
 
     <?php
-   if(mysql_num_rows($kampe) > 0){
+   if(mysqli_num_rows($kampe) > 0){
    echo "<div class='g12'><table>";
    $class="";
    while($kamp = mysql_fetch_array($kampe)){
@@ -31,14 +31,14 @@ $i = 0;
 
     ?>
 
-<? if(mysql_num_rows($kampe) < 1){ ?>
+<? if(mysqli_num_rows($kampe) < 1){ ?>
 <div class='g12'>Ingen kommende kampe.<br /> </div>
 <? } ?>
 
 
 <?
 $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and vinder = '' AND type = 'p'") or die(mysqli_error($link));
-if(mysql_num_rows($kampe) < 1){
+if(mysqli_num_rows($kampe) < 1){
 
 ?>
 <br /><a href="turnering_kvart_puljekonflikt.php" class="btn green">Gå til finaler</a></div>

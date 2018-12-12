@@ -10,7 +10,7 @@ if(isset($_GET["new"])){
 // Henter seneste turnerings id
 $result = mysqli_query($link,"SELECT turnering_id from hbf_turnering order by date desc limit 0,1") or die(mysqli_error($link));
 $row = mysql_fetch_array($result);
-if(mysql_num_rows($result) > 0){
+if(mysqli_num_rows($result) > 0){
   $turneringsid = $row["turnering_id"];
 }
 ?>

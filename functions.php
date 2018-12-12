@@ -410,7 +410,7 @@ function checkNum($num){
         function puljer2hent($turnerings_id,$rangering_total,$pulje_nr){
       $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE turnerings_id = '$turnerings_id' and rangering_total in ($rangering_total) AND kvartfinale = 0 AND pulje_nr = $pulje_nr ORDER BY rangering_total limit 0,1")or die(mysqli_error($link));
       $row = mysql_fetch_array($hent);
-      if(mysql_num_rows($hent)> 0){
+      if(mysqli_num_rows($hent)> 0){
         $type = $row["spiller_id"];
        
       } else {

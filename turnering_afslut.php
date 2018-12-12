@@ -114,7 +114,7 @@ if(isset($_GET["afslut"]) && $turnering["ended"] != 1){
     mysqli_query($link,"UPDATE hbf_turnering SET ended=1 WHERE turnering_id = '$turnerings_id'") or die(mysqli_error($link));
     // Kan kun opdateres en gang
     $hent = mysqli_query($link,"SELECT * FROM hbf_rangliste WHERE turnerings_id = '$turnerings_id'");
-    if(mysql_num_rows($hent)<9999999){
+    if(mysqli_num_rows($hent)<9999999){
         // Ordinært
         $rangliste = $point[0];
         $type = "Vinder af finale";

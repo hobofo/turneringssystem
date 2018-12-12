@@ -10,7 +10,7 @@ $i = 0;
  ?>
    
 <?php
-    if(mysql_num_rows($kampe) > 0){
+    if(mysqli_num_rows($kampe) > 0){
     echo "<div class='g12'><table>";
     $vinner="font-weight:bold;";
     while($kamp = mysql_fetch_array($kampe)){
@@ -22,7 +22,7 @@ $i = 0;
     }
 ?>
 
-<? if(mysql_num_rows($kampe) < 1){ ?>
+<? if(mysqli_num_rows($kampe) < 1){ ?>
     <div class='g12'>Ingen afsluttede kampe endnu </div>
 <? } ?>
 				

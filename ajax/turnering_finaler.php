@@ -18,7 +18,7 @@ $case = "
 // Sætter bordnumre
 // Checker at der er lige så mange nuværendekampe som borde
     $kampe = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE turnerings_id = '".$turneringsid."' and bord <> '' and  vinder = '' and type <> 'p' order by $case") or die(mysqli_error($link));
-    $livekampe = mysql_num_rows($kampe);
+    $livekampe = mysqli_num_rows($kampe);
     $borde = dbarraytoarray($turnering["borde"]);
     $antalborde = count($borde);
 

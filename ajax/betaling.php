@@ -7,7 +7,7 @@ $i = 0;
 
 $betaling = mysqli_query($link,"SELECT * FROM hbf_spillere left join hbf_brugere on hbf_brugere.bruger_id  = hbf_spillere.spiller WHERE turnering_id = '".$turneringsid."' and betalt <> 1 order by hbf_brugere.navn") or die(mysqli_error($link));
 
-if(mysql_num_rows($betaling) > 0){
+if(mysqli_num_rows($betaling) > 0){
 echo "<div class='g12'>";
    $class="";
    $i = 0;
@@ -36,6 +36,6 @@ echo "<div class='g12'>";
 
 ?>
 
-<? if(mysql_num_rows($betaling) < 1){ ?>
+<? if(mysqli_num_rows($betaling) < 1){ ?>
 <div class='g12'>Ingen mangler af betale.<br /></div>
 <? } ?>

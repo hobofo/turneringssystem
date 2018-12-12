@@ -59,7 +59,7 @@ $kamp_finale = mysqli_insert_id($link);
 
     // Hvis mindre end 8 hold - fordel hold
 $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total <= 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($link));
-$holdcount = mysql_num_rows($hent);
+$holdcount = mysqli_num_rows($hent);
 
 
 
@@ -319,7 +319,7 @@ $kamp_finale = mysqli_insert_id($link);
 
     // Hvis mindre end 8 hold - fordel hold
 $hent = mysqli_query($link,"SELECT * FROM hbf_puljer WHERE rangering_total > 8 and kvartfinale = 0 AND turnerings_id = '$turnerings_id'")or die(mysqli_error($link));
-$holdcount = mysql_num_rows($hent);
+$holdcount = mysqli_num_rows($hent);
 
 
 if(in_array($holdcount, array(0))){

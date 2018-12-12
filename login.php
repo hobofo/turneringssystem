@@ -11,7 +11,7 @@ if(isset($_POST["password"])){
     $result2 = mysqli_query($link,"SELECT * FROM hbf_indstillinger WHERE short = 'brugernavn' AND setting ='$username'");
 	$result3 = mysqli_query($link,"SELECT * FROM *");
     
-	if(mysql_num_rows($result1) && mysql_num_rows($result2) )
+	if(mysqli_num_rows($result1) && mysqli_num_rows($result2) )
 	{
 		// Login
 

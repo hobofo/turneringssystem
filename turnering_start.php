@@ -42,7 +42,7 @@ if(isset($_POST["turneringsid"])){
             $modstander =  $rowp["spiller_id"];
             // Ser om kombinationen findes
             $komp = mysqli_query($link,"SELECT *  FROM `hbf_kampe` where turnerings_id = '$turneringsid'  and ((hold1 = '$spiller_id' AND hold2 = '$modstander') OR (hold1 = '$modstander' AND hold2 = '$spiller_id') )") or die(mysqli_error($link));
-            if(mysql_num_rows($komp)< 1){
+            if(mysqli_num_rows($komp)< 1){
                     $rang1 = hentrang($spiller_id);
                     $rang2 = hentrang($modstander);
                     $insert = mysqli_query($link,"INSERT INTO hbf_kampe (turnerings_id,hold1,hold2,rang1,rang2,type,kampnr,pulje,parameter) values ('$turneringsid','$spiller_id','$modstander','$rang1','$rang2','p','$kampnr','$pulje_nr','$i')")or die(mysqli_error($link));

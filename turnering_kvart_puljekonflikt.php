@@ -17,7 +17,7 @@ if(isset($_GET["forfra"])){
 
 // Sender videre til kvartfinaler hvis der er nogen aktive kvartfinaler
 $finaler = mysqli_query($link,"SELECT * FROM hbf_kampe WHERE type = 'f' AND turnerings_id = '$turnerings_id'") or die(mysqli_error($link));
-if(mysql_num_rows($finaler)>0 && $startforfra == false){
+if(mysqli_num_rows($finaler)>0 && $startforfra == false){
     header("location:turnering_kvart.php");
     exit();
 }
@@ -64,7 +64,7 @@ while($spiller = mysql_fetch_array($result)){
 
 // Tæller konflikter
 $hent = mysqli_query($link,"SELECT DISTINCT `rangering_konflikt` as konflikt FROM `hbf_puljer` WHERE `turnerings_id` = '$turnerings_id' and rangering_konflikt != 0");
-$konflikter = mysql_num_rows($hent);
+$konflikter = mysqli_num_rows($hent);
 
 if($konflikter < 2){
     header("location:turnering_kvart_rangkonflikt.php");

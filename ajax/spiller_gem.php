@@ -31,7 +31,7 @@ $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spil
 $rowsp1 = mysql_fetch_array($result);
 
 
-if(mysql_num_rows($result) < 1){
+if(mysqli_num_rows($result) < 1){
  echo "0##Spiller 1 med telefonnummeret '$spiller1' findes ikke! Opret spilleren og prøv igen.";
  return;
 } else if($rowsp1["rangliste"] >= $maxPoints[date('l')]) {
@@ -47,7 +47,7 @@ if($spiller2 != ""){
     $result = mysqli_query($link,"SELECT * FROM hbf_brugere where telefon = '".$spiller2."' and deaktiv != '1'");
     $rowsp2 = mysql_fetch_array($result);
 
-    if(mysql_num_rows($result) < 1){
+    if(mysqli_num_rows($result) < 1){
      echo "0##Spiller 2 med telefonnummeret '$spiller2' findes ikke! Opret spilleren og prøv igen.";
      return;
     } else if($rowsp2["rangliste"] >= $maxPoints[date('l')]) {
@@ -64,7 +64,7 @@ $turneringsid = $_POST["turneringsid"];
 
 // Tester om spiller 1 allerede er en den af turneringen
 $results = mysqli_query($link,"SELECT * FROM hbf_spillere where spiller = '$spiller1' and turnering_id = '$turneringsid'");
-if(mysql_num_rows($results) > 0){
+if(mysqli_num_rows($results) > 0){
     echo "0##$navn1 ($tlf1) er allerede tilmeldt turneringen.";
     return;
 }
@@ -72,7 +72,7 @@ if(mysql_num_rows($results) > 0){
 // Tester om spiller 1 allerede er en den af turneringen
 if($spiller2 != ""){
     $results = mysqli_query($link,"SELECT * FROM hbf_spillere where spiller in ('$spiller2') and turnering_id = '$turneringsid'");
-    if(mysql_num_rows($results) > 0){
+    if(mysqli_num_rows($results) > 0){
         echo "0##$navn2 ($tlf2) er allerede tilmeldt turneringen.";
         return;
     }
